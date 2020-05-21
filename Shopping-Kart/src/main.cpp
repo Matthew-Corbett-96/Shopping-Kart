@@ -7,7 +7,7 @@
 #define End << std::endl 
 #define Skip std::cout << std::endl 
 #define New_line << "\n" << 
-#define Clear_Screen std::cout.flush()
+#define Clear_Screen std::system("cls")
 #define Get std::cin >> 
 #define AAnd >>
 
@@ -27,19 +27,20 @@ int main()
         bool active_kart = true;
 
         // Clear Screen for Application
-        std::system("cls");
+        Clear_Screen;
 
         // Opening Screen 
         Log
-            "------------------------------------" New_line
-            "Welcome to Matty J's Online Shoping!" New_line
-            "Lets set up your profile."            New_line
-            "First Type in your name below."       New_line
-            "Name: "; std::cin.get(input, 25);     Skip;
+            "------------------------------------"  New_line
+            "Welcome to Matty J's Online Shoping!"  New_line
+            "      Lets set up your profile.     "  New_line
+            "    First Type in your name below.  "  New_line
+            "------------------------------------"  New_line
+            "Name: "; std::cin.get(input, 25);      Skip;
 
         name = input;
         Kart kart(name);
-        std::system("clear");
+        Clear_Screen;
 
         // Operation Screen 
         Log
@@ -63,40 +64,40 @@ int main()
             switch (operation)
             {
             case 1:
-                std::system("clear");
+                Clear_Screen;
                 add_items_to_kart(kart);
                 break;
 
             case 2:
-                std::system("clear");
+                Clear_Screen;
                 get_item_info(kart);
                 break;
 
             case 3:
-                std::system("clear");
+                Clear_Screen;
                 kart.print_kart();
                 break;
 
             case 4:
-                std::system("clear");
+                Clear_Screen;
                 check_out_kart(kart);
                 active_kart = false;
                 break;
 
             default:
-                std::system("clear");
+                Clear_Screen;
                 Log "Invalid Number. Must be 1 - 4." End;
                 break;
             }
         }
     }
 
-    // Error Handeling ----------------------------------------------------------------
+    // Error Handeling -------------------------------------------------------------------
     catch (std::invalid_argument error) { Log "Invalid Argument: " And error.what() End; }
     catch (std::range_error      error) { Log "Range Error: "      And error.what() End; }
     catch (std::length_error     error) { Log "Length Error: "     And error.what() End; }
     catch (...) { Log "Other Error: "      End; }
-    //---------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------
 
     return 0;
 }
@@ -114,15 +115,15 @@ void add_items_to_kart(Kart& kart)
         "---------------------------------------------------" New_line
         "To add item. Type name of item, then price of item." New_line
         "---------------------------------------------------" New_line
-        "Enter Item name: ";      Get name;                   Skip;
-    Log "Enter Item price: "; Get price;                  Skip;
-    Log "Quantity of item: "; Get quantity;               Skip;
+        "Enter Item name: ";  Get name;                       Skip;
+    Log "Enter Item price: "; Get price;                      Skip;
+    Log "Quantity of item: "; Get quantity;                   Skip;
 
     // Create number of item specififed
     for (int i = 0; i < quantity; i++) kart.add_item(name, price);
 
     // Clear Screen
-    std::system("clear");
+    Clear_Screen;
 
     // Print to console
     Log
@@ -146,7 +147,7 @@ void get_item_info(Kart& kart)
         "Name(0), Price(1), or Both(2): "; Get todo;
 
     // Clear console
-    std::system("clear");
+    Clear_Screen;
 
     switch (todo)
     {
@@ -175,6 +176,6 @@ void check_out_kart(Kart& kart)
     // Get Distance from User then run Kart Classes checkout method 
     float distance;
     Log "Enter Distance in Miles: "; Get distance;
-    std::system("clear");
+    Clear_Screen;
     kart.check_out(distance);
 }
