@@ -24,12 +24,18 @@
     <ClCompile Include="Shopping-Kart\src\Kart.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Shopping-Kart\src\V_User.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shopping-Kart\src\Item.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Shopping-Kart\src\Kart.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shopping-Kart\src\V_User.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

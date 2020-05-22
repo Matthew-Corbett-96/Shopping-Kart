@@ -31,12 +31,12 @@ int main()
 
         // Opening Screen 
         Log
-            "------------------------------------"  New_line
-            "Welcome to Matty J's Online Shoping!"  New_line
-            "      Lets set up your profile.     "  New_line
-            "    First Type in your name below.  "  New_line
-            "------------------------------------"  New_line
-            "Name: "; std::cin.get(input, 25);      Skip;
+            "--------------------------------------"  New_line
+            "-Welcome to Matty J's Online Shoping!-"  New_line
+            "-      Lets set up your profile.     -"  New_line
+            "-    First Type in your name below.  -"  New_line
+            "--------------------------------------"  New_line
+            "Name: "; std::cin.get(input, 25);        Skip;
 
         name = input;
         Kart kart(name);
@@ -45,7 +45,7 @@ int main()
         // Operation Screen 
         Log
             "------------------------------------------------------"  New_line
-            "Account Created for " And name                           New_line
+            "        Account Created for " And name                   New_line
             "Type the number of the operation you would like to do:"  New_line
             "------------------------------------------------------"  End;
 
