@@ -53,10 +53,7 @@ Normal_User::~Normal_User() {}
 //-----------------------------------------
 
 // Print User's History to the console // override
-void Normal_User::print_user_history() const
-{
-	// TBT 
-}
+void Normal_User::print_user_history() const { for(const auto& item : user_purchase_history) item.print_Item(); }
 
 // Get Kart Information // override
 void Normal_User::get_info() const

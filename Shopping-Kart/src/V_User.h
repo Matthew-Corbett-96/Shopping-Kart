@@ -3,7 +3,7 @@
 #include <string>
 #include <iostream>
 #include "Kart.h"
-#include <stack>
+#include <list>
 #include <exception>
 #include <memory>
 
@@ -21,7 +21,7 @@ protected:
 	// User Phone Number 
 	std::string user_phone_number = "N/A";
 	// User's purchase History w/ time stamps 
-	std::stack<Item> user_purchase_history;
+	std::list<Item> user_purchase_history;
 public:
 	// Constructors 
 	V_User();

@@ -14,6 +14,8 @@ private:
     std::string kart_name = "Kart";
     // List of Items 
     std::vector<Item> shoping_list;
+
+protected:
     // Number of Items in List 
     unsigned int list_length = 0;
 
@@ -32,6 +34,7 @@ public:
     const Item& get_item(int) const;
     const float get_item_price(int) const;
     const std::string get_item_name(int) const;
+    const unsigned int length() const; 
 
     // Setters 
     void set_name(const std::string&);

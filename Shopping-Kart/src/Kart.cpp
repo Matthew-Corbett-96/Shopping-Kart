@@ -104,6 +104,8 @@ const std::string Kart::get_item_name(int index) const
     return shoping_list.at(--index).get_name();
 }
 
+const unsigned int Kart::length() const { return this->list_length; }
+
 // Setters--------------------------------- 
 // ----------------------------------------
 // ----------------------------------------

@@ -113,7 +113,7 @@ void V_User::add_items_to_kart()
     for (int i = 0; i < quantity; i++) 
     {
         std::unique_ptr<Item> tempitem = std::make_unique<Item>(name, price);
-        this->user_purchase_history.push(*tempitem);
+        this->user_purchase_history.emplace_back(*tempitem);
     }
 
     // Clear Screen
