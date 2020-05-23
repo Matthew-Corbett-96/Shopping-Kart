@@ -22,10 +22,12 @@
     <ClCompile Include="Shopping-Kart\src\Kart.cpp" />
     <ClCompile Include="Shopping-Kart\src\Item.cpp" />
     <ClCompile Include="Shopping-Kart\src\main.cpp" />
+    <ClCompile Include="Shopping-Kart\src\V_User.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shopping-Kart\src\Item.h" />
     <ClInclude Include="Shopping-Kart\src\Kart.h" />
+    <ClInclude Include="Shopping-Kart\src\V_User.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
