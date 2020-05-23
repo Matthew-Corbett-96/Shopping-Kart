@@ -12,7 +12,8 @@
 /**************CANNOT BE IMPLIMENTED********************/
 
 class V_User {
-private:
+protected:
+
 	// User's Name
 	std::string user_name = "N/A";
 	// User's Shopping Kart object 
@@ -33,14 +34,15 @@ public:
 	// Destructor -- Virtual 
 	virtual ~V_User();
 
-	// Setters -- All Pure Virtual 
-	virtual void set_user_name(const std::string&) = 0;
-	virtual void set_user_adress(const std::string&) = 0;
-	virtual void set_user_phone(const std::string&) = 0;
+	// Setters -- All Virtual 
+	virtual void set_user_name   (const std::string&);
+	virtual void set_user_address(const std::string&);
+	virtual void set_user_phone  (const std::string&);
 
-	// Getters -- All Pure Virtual 
-	virtual const std::string& get_user_name() const = 0;
-	virtual const std::string& get_user_address() const = 0;
-	virtual const std::string& get_user_phone() const = 0;
-	virtual void get_user_history() const = 0;
+	// Getters -- All Virtual // 1 Pure 
+	virtual const std::string& get_user_name   () const;
+	virtual const std::string& get_user_address() const;
+	virtual const std::string& get_user_phone  () const;
+	virtual const Kart&        get_user_kart   () const;
+	virtual void               get_user_history() const = 0;
 };

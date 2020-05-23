@@ -1,4 +1,5 @@
 #include "Kart.h"
+#include "Normal_User.h"
 #include <stdlib.h>
 
 // Personal Logging Macros
@@ -13,8 +14,8 @@
 
 // Function declorations----------------
 void add_items_to_kart(Kart&);
-void get_item_info(Kart&);
-void check_out_kart(Kart&);
+void get_item_info    (Kart&);
+void check_out_kart   (Kart&);
 //--------------------------------------
 
 int main()
@@ -23,7 +24,7 @@ int main()
     {
         //  Vars Needed to create Profile 
         char input[25];
-        std::string name;
+        std::string name, adress, phone_number; 
         bool active_kart = true;
 
         // Clear Screen for Application
@@ -37,9 +38,8 @@ int main()
             "-    First Type in your name below.  -"  New_line
             "--------------------------------------"  New_line
             "Name: "; std::cin.get(input, 25);        Skip;
-
         name = input;
-        Kart kart(name);
+        Normal_User user(name);
         Clear_Screen;
 
         // Operation Screen 
@@ -65,22 +65,22 @@ int main()
             {
             case 1:
                 Clear_Screen;
-                add_items_to_kart(kart);
+                user.add_items_to_kart();
                 break;
 
             case 2:
                 Clear_Screen;
-                get_item_info(kart);
+                get_item_info(user.user_kart));
                 break;
 
             case 3:
                 Clear_Screen;
-                kart.print_kart();
+                user.user_kart.print_kart();
                 break;
 
             case 4:
                 Clear_Screen;
-                check_out_kart(kart);
+                check_out_kart(user.user_kart);
                 active_kart = false;
                 break;
 
@@ -102,35 +102,7 @@ int main()
     return 0;
 }
 
-// Adding Item to the Kart 
-void add_items_to_kart(Kart& kart)
-{
-    char input[50];
-    std::string name;
-    float price;
-    unsigned int quantity;
 
-    // Get Item information from User
-    Log
-        "---------------------------------------------------" New_line
-        "To add item. Type name of item, then price of item." New_line
-        "---------------------------------------------------" New_line
-        "Enter Item name: ";  Get name;                       Skip;
-    Log "Enter Item price: "; Get price;                      Skip;
-    Log "Quantity of item: "; Get quantity;                   Skip;
-
-    // Create number of item specififed
-    for (int i = 0; i < quantity; i++) kart.add_item(name, price);
-
-    // Clear Screen
-    Clear_Screen;
-
-    // Print to console
-    Log
-        "---------------------------------------------------" New_line
-        "                  " And name And " Added to Kart."   New_line
-        "---------------------------------------------------" End;
-}
 
 // Get information on items in Kart
 void get_item_info(Kart& kart)
