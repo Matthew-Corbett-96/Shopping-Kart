@@ -13,7 +13,6 @@
 
 class V_User {
 protected:
-
 	// User's Name
 	std::string user_name = "N/A";
 	// User's Shopping Kart object 
@@ -39,10 +38,12 @@ public:
 	virtual void set_user_address(const std::string&);
 	virtual void set_user_phone  (const std::string&);
 
-	// Getters -- All Virtual // 1 Pure 
+	// Getters -- All Virtual
 	virtual const std::string& get_user_name   () const;
 	virtual const std::string& get_user_address() const;
 	virtual const std::string& get_user_phone  () const;
-	virtual const Kart&        get_user_kart   () const;
-	virtual void               get_user_history() const = 0;
+
+	// Specialty Functions 
+	virtual void get_user_history() const = 0;
+	void add_items_to_kart();
 };
