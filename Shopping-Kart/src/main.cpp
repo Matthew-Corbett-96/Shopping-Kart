@@ -12,12 +12,6 @@
 #define Get std::cin >> 
 #define AAnd >>
 
-// Function declorations----------------
-void add_items_to_kart(Kart&);
-void get_item_info    (Kart&);
-void check_out_kart   (Kart&);
-//--------------------------------------
-
 int main()
 {
     try
@@ -70,17 +64,17 @@ int main()
 
             case 2:
                 Clear_Screen;
-                get_item_info(user.user_kart));
+                user.get_info();
                 break;
 
             case 3:
                 Clear_Screen;
-                user.user_kart.print_kart();
+                user.print_current_kart();
                 break;
 
             case 4:
                 Clear_Screen;
-                check_out_kart(user.user_kart);
+                user.check_out();
                 active_kart = false;
                 break;
 
@@ -96,13 +90,11 @@ int main()
     catch (std::invalid_argument error) { Log "Invalid Argument: " And error.what() End; }
     catch (std::range_error      error) { Log "Range Error: "      And error.what() End; }
     catch (std::length_error     error) { Log "Length Error: "     And error.what() End; }
-    catch (...) { Log "Other Error: "      End; }
+    catch (...)                         { Log "Other Error: "                       End; }
     //------------------------------------------------------------------------------------
 
     return 0;
 }
-
-
 
 // Get information on items in Kart
 void get_item_info(Kart& kart)
@@ -140,14 +132,4 @@ void get_item_info(Kart& kart)
         kart.get_item(index).print_Item();
         break;
     }
-}
-
-// Kart Checkout Function
-void check_out_kart(Kart& kart)
-{
-    // Get Distance from User then run Kart Classes checkout method 
-    float distance;
-    Log "Enter Distance in Miles: "; Get distance;
-    Clear_Screen;
-    kart.check_out(distance);
 }

@@ -13,14 +13,17 @@ public:
 	Normal_User(const std::string&, const std::string&, const std::string&);
 
 	// Destructor -- Override
-	~Normal_User() override;
+	virtual ~Normal_User() override;
 
 	// Setters -- All Overridden
 	
 
 	// Getters -- All Overridden 
 
-	// Specialty 
-	void get_user_history() const override;
+	// Specialty Functions 
+	void print_user_history() const override;
+	void get_info          () const override;
+	void check_out         ()       override;
+	void print_current_kart() const override;
 };
 

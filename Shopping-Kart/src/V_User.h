@@ -2,9 +2,8 @@
 
 #include <string>
 #include <iostream>
-#include "Item.h"
 #include "Kart.h"
-#include <map>
+#include <stack>
 #include <exception>
 #include <memory>
 
@@ -22,7 +21,7 @@ protected:
 	// User Phone Number 
 	std::string user_phone_number = "N/A";
 	// User's purchase History w/ time stamps 
-	std::multimap<std::string, Item> user_purchase_history;
+	std::stack<Item> user_purchase_history;
 public:
 	// Constructors 
 	V_User();
@@ -44,6 +43,9 @@ public:
 	virtual const std::string& get_user_phone  () const;
 
 	// Specialty Functions 
-	virtual void get_user_history() const = 0;
-	void add_items_to_kart();
+	virtual void print_user_history() const = 0; 
+	        void add_items_to_kart ();
+	virtual void get_info          () const = 0; 
+	virtual void check_out         ()       = 0;
+	virtual void print_current_kart() const = 0; 
 };

@@ -109,6 +109,13 @@ void V_User::add_items_to_kart()
     // Create number of item specififed
     for (int i = 0; i < quantity; i++) this->user_kart.add_item(name, price);
 
+    // Add the Items to the Users History Stack 
+    for (int i = 0; i < quantity; i++) 
+    {
+        std::unique_ptr<Item> tempitem = std::make_unique<Item>(name, price);
+        this->user_purchase_history.push(*tempitem);
+    }
+
     // Clear Screen
     Clear_Screen;
 
