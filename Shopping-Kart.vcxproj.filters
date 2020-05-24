@@ -30,6 +30,9 @@
     <ClCompile Include="Shopping-Kart\src\Normal_User.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Shopping-Kart\src\Gold_User.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shopping-Kart\src\Item.h">
@@ -42,6 +45,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Shopping-Kart\src\Normal_User.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shopping-Kart\src\Gold_User.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

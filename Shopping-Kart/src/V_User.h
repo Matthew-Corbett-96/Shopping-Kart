@@ -6,6 +6,8 @@
 #include <list>
 #include <exception>
 #include <memory>
+#include <chrono>
+#include <thread>
 
 /************THIS CLASS IS AN INTERFACE*****************/ 
 /**************CANNOT BE IMPLIMENTED********************/
@@ -44,7 +46,7 @@ public:
 
 	// Specialty Functions 
 	virtual void print_user_history() const = 0; 
-	        void add_items_to_kart ();
+	virtual void add_items_to_kart ();
 	virtual void get_info          () const = 0; 
 	virtual void check_out         ()       = 0;
 	virtual void print_current_kart() const = 0; 

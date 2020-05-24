@@ -59,7 +59,7 @@ void Normal_User::print_user_history() const { for(const auto& item : user_purch
 void Normal_User::get_info() const
 {
     // Get the index and the information wanted from user then use Karts info method
-    int todo(0), index(0);
+    int index(0);
 
     Log
         "---------------------------------------------------"              New_line

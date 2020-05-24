@@ -31,7 +31,14 @@ V_User::V_User() {}
 V_User::V_User(const std::string& name)
 	: user_name(name) 
 {
-	this->user_kart.set_name(user_name);
+    // If name is over 25 characters, throw Error. 
+    if (name.size() > 25)
+    {
+        throw std::length_error("Name Can Only Be 25 Characters.\n");
+        user_name = "N/A"; 
+    }
+    else
+	    this->user_kart.set_name(user_name);
 }
 
 
@@ -39,6 +46,11 @@ V_User::V_User(const std::string& name)
 V_User::V_User(const std::string& name, const std::string& address)
 	: user_name(name), user_address(address) 
 {
+    if (name.size() > 25)
+    {
+        throw std::length_error("Name Can Only Be 25 Characters.\n");
+        user_name = "N/A";
+    }
 	this->user_kart.set_name(user_name);
 }
 
@@ -46,6 +58,16 @@ V_User::V_User(const std::string& name, const std::string& address)
 V_User::V_User(const std::string& name, const std::string& address, const std::string& phone_number)
 	: user_name(name), user_address(address), user_phone_number(phone_number) 
 {
+    if (name.size() > 25)
+    {
+        throw std::length_error("Name Can Only Be 25 Characters.\n");
+        user_name = "N/A";
+    }
+    if (user_phone_number.size() > 13)
+    {
+        throw std::length_error("Phone Number Must be Valid Length.\n");
+        user_phone_number = "N/A";
+    }
 	this->user_kart.set_name(user_name);
 }
 
@@ -65,6 +87,12 @@ V_User::~V_User() {}
 // Set User Name to User and Kart 
 void V_User::set_user_name(const std::string& name)
 {
+    if (name.size() > 25)
+    {
+        throw std::length_error("Name Can Only Be 25 Characters.\n");
+        user_name = "N/A";
+        return;
+    }
 	this->user_name = name;
 	this->user_kart.set_name(user_name);
 }
@@ -73,7 +101,15 @@ void V_User::set_user_name(const std::string& name)
 void V_User::set_user_address(const std::string& address) { this->user_address = address; }
 
 // Set User Phone Number 
-void V_User::set_user_phone(const std::string& phone_number) { this->user_phone_number = phone_number; }
+void V_User::set_user_phone(const std::string& phone_number) 
+{ 
+    if (user_phone_number.size() > 12)
+    {
+        throw std::length_error("Phone Number Must be Valid Length.\n");
+        user_phone_number = "N/A";
+    }
+    this->user_phone_number = phone_number; 
+}
 
 // Getters---------------------------------
 //-----------------------------------------
@@ -92,19 +128,23 @@ const std::string& V_User::get_user_phone() const { return this->user_phone_numb
 // Adding Item to the Kart 
 void V_User::add_items_to_kart()
 {
-    char input[50];
-    std::string name;
-    float price;
-    unsigned int quantity;
+    //chars for the input 
+    char input1[50], input2[50],input3[5];
 
     // Get Item information from User
     Log
         "---------------------------------------------------" New_line
-        "To add item. Type name of item, then price of item." New_line
+        "     Type the item's name, followed by a '/'       " New_line
         "---------------------------------------------------" New_line
-        "Enter Item name: ";  Get name;                       Skip;
-    Log "Enter Item price: "; Get price;                      Skip;
-    Log "Quantity of item: "; Get quantity;                   Skip;
+        "Enter Item name: ";  std::cin.get(input1, 50, '/'); std::cin.ignore(1);
+    Log "Enter Item price: "; std::cin.get(input2, 50, '/'); std::cin.ignore(1);
+    Log "Quantity of item: "; std::cin.get(input3, 5, '/'); std::cin.ignore(1);
+
+    // Variables 
+    std::string name = input1;
+    float price = atof(input2);
+    unsigned int quantity(0);
+    quantity = atoi(input3);
 
     // Create number of item specififed
     for (int i = 0; i < quantity; i++) this->user_kart.add_item(name, price);
@@ -124,4 +164,8 @@ void V_User::add_items_to_kart()
         "---------------------------------------------------" New_line
         "                  " And name And " Added to Kart."   New_line
         "---------------------------------------------------" End;
+ 
+    using namespace std::chrono_literals;
+    std::this_thread::sleep_for(3s);
+    Clear_Screen;
 }

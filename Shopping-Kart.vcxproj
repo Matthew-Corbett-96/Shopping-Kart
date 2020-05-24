@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Shopping-Kart\src\Gold_User.cpp" />
     <ClCompile Include="Shopping-Kart\src\Normal_User.cpp" />
     <ClCompile Include="Shopping-Kart\src\Kart.cpp" />
     <ClCompile Include="Shopping-Kart\src\Item.cpp" />
@@ -26,6 +27,7 @@
     <ClCompile Include="Shopping-Kart\src\V_User.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Shopping-Kart\src\Gold_User.h" />
     <ClInclude Include="Shopping-Kart\src\Normal_User.h" />
     <ClInclude Include="Shopping-Kart\src\Item.h" />
     <ClInclude Include="Shopping-Kart\src\Kart.h" />

@@ -4,7 +4,7 @@
 class Normal_User : public V_User
 {
 private:
-	const bool Premium_Status = false; 
+	static const bool Gold_Status = false; 
 public:
 	// Constructors 
 	Normal_User();
