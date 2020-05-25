@@ -1,11 +1,7 @@
 #pragma once 
 
-#include <string>
-#include <iostream>
 #include "Kart.h"
 #include <list>
-#include <exception>
-#include <memory>
 #include <chrono>
 #include <thread>
 

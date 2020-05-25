@@ -28,22 +28,20 @@ public:
     void print_Item() const;
 
     // Setters 
-    void set_name(const std::string&);
+    void set_name (const std::string&);
     void set_price(const float&);
 
     // Getters 
-    const std::string get_name() const;
-    const float get_price() const;
-
-    // Logger formatter 
+    const std::string get_name () const;
+    const float       get_price() const;
 
     // Operator overloading 
-    Item& operator=(const Item& item);
-    bool operator>(const Item& item);
-    bool operator<(const Item& item);
-    bool operator==(const Item& item);
+    Item& operator= (const Item& item);
+    bool  operator> (const Item& item);
+    bool  operator< (const Item& item);
+    bool  operator==(const Item& item);
 
-    // Kart Class will have access to items private variables
+    // Friends with Kart Class 
     friend class Kart;
 };
 

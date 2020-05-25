@@ -1,10 +1,7 @@
 #pragma once 
 
-#include <iostream> 
-#include <string> 
 #include <vector>
 #include <memory>
-#include <exception>
 #include "Item.h"
 
 class Kart
@@ -31,10 +28,10 @@ public:
     ~Kart();
 
     // Getters 
-    const Item& get_item(int) const;
-    const float get_item_price(int) const;
-    const std::string get_item_name(int) const;
-    const unsigned int length() const; 
+    const Item&        get_item      (int) const;
+    const float        get_item_price(int) const;
+    const std::string  get_item_name (int) const;
+    const unsigned int length        (   ) const; 
 
     // Setters 
     void set_name(const std::string&);
@@ -47,5 +44,6 @@ public:
     // Print Kart 
     void print_kart() const;
 
+    // Friend Class is Item 
     friend class Item;
 };

@@ -67,6 +67,14 @@ void Gold_User::get_info() const
 		"###################################################"  And "\n";
 		Get index;  Skip;
 
+    // If index is out of Range then throw Error 
+    if (index >= user_kart.length() || index <= 0)
+    {
+        Clear_Screen;
+        throw std::length_error("Index is Out of Range.");
+        return; 
+    }
+
 	// Clear console
 	Clear_Screen;
 	this->user_kart.get_item(index).print_Item();
@@ -117,7 +125,8 @@ void Gold_User::add_items_to_kart()
     quantity = atoi(input3);
 
     // Create number of item specififed
-    for (int i = 0; i < quantity; i++) this->user_kart.add_item(name, price);
+    for (int i = 0; i < quantity; i++) 
+        this->user_kart.add_item(name, price);
 
     // Add the Items to the Users History Stack 
     for (int i = 0; i < quantity; i++)

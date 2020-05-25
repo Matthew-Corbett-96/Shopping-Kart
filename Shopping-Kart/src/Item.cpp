@@ -27,8 +27,17 @@ Item::Item() {}
 Item::Item(std::string m_name, float m_price)
     :item_name(m_name), item_price(m_price)
 {
-    if (m_name.length() > 25) throw std::invalid_argument("Name of Items Cannot be Greater Than 25 Characters.\n");
-    if (m_price < 0.00f) throw std::invalid_argument("Price of Items Cannot be Negative.\n");
+    if (m_name.length() > 25)
+    {
+        item_name = "N/A";
+        throw std::invalid_argument("Name of Items Cannot be Greater Than 25 Characters.\n");
+    }
+
+    if (m_price < 0.00f)
+    {
+        item_price = 0.00f;
+        throw std::invalid_argument("Price of Items Cannot be Negative.\n");
+    }
 }
 
 // Copy Constructor 
@@ -56,10 +65,14 @@ Item::~Item() {}
 // Print Item
 void Item::print_Item() const
 {
-    std::cout << std::setprecision(2) << std::fixed;
-    std::cout << "----------\n";
-    std::cout << "Item: " << get_name() << "\nPrice: $" << get_price() << "\n";
-    std::cout << "----------\n";
+    // Set the Decimal Point in the Printing 
+    Log std::setprecision(2) And std::fixed;
+
+    Log
+        "----------------------------------"  New_line
+        "          Item : " And get_name()    New_line
+        "          Price: $" And get_price()  New_line
+        "----------------------------------"  End;
 }
 
 // Setters---------------------------------
@@ -70,14 +83,18 @@ void Item::print_Item() const
 // Set Item Name 
 void Item::set_name(const std::string& m_name)
 {
-    if (m_name.length() > 25) throw std::invalid_argument("Length of Name Cannot be More Than 25 characters\n");
+    // If length is too large then Throw Error 
+    if (m_name.length() > 25)
+        throw std::invalid_argument("Length of Name Cannot be More Than 25 characters\n");
     item_name = m_name;
 }
 
 // Set Item Price 
 void Item::set_price(const float& price)
 {
-    if (price < 0.00f) throw std::invalid_argument("Price Cannot be Negative.\n");
+    // If the Price is negative then throw Error 
+    if (price < 0.00f) 
+        throw std::invalid_argument("Price Cannot be Negative.\n");
     item_price = price;
 }
 
