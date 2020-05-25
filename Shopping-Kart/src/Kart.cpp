@@ -60,7 +60,8 @@ Kart::Kart(const Kart& kart)
     this->list_length = kart.list_length;
     this->kart_name = kart.kart_name;
     shoping_list.reserve(10);
-    for (auto item : kart.shoping_list) shoping_list.emplace_back(item);
+    for (const auto item : kart.shoping_list) 
+        shoping_list.emplace_back(item);
 }
 
 // Destructors-----------------------------
@@ -136,18 +137,19 @@ void Kart::set_name(const std::string& name)
 // Add an Item to the Kart List // name and price 
 void Kart::add_item(const std::string& name, const float& price)
 {
-    // Log "Adding Item w/" And name And " And " And price End;
+    // Create new item and place into shopping list 
     std::shared_ptr<Item> new_item = std::make_shared<Item>(name, price);
-    shoping_list.emplace_back(*new_item);
-    list_length++;
+    this->shoping_list.emplace_back(*new_item);
+    this->list_length++;
 }
 
 // Add an Item to the Kart List // Item 
 void Kart::add_item(const Item& item)
 {
+    // Create new item and place into shopping list 
     std::shared_ptr<Item> new_item = std::make_shared<Item>(item);
-    shoping_list.emplace_back(*new_item);
-    list_length++;
+    this->shoping_list.emplace_back(*new_item);
+    this->list_length++;
 }
 
 // Calculate Total Price   
@@ -155,12 +157,12 @@ void Kart::check_out(const float& distance) const
 {
     // If the distance is negative throw invalad arg error
     if (distance < 0.00f) 
-        throw std::invalid_argument("Distance of Order Cannot Be Negative\n");
+        throw std::invalid_argument("Distance of Order Cannot Be Negative");
 
     // If Kart is empty --> Log Message and return 
     if (shoping_list.empty())
     {
-        Log "***KART IS EMPTY. Please make a purchase to see your recipt.***\n" End;
+        Log "***KART IS EMPTY. Please make a purchase to see your recipt.***" End;
         // Setting the std::cout to round to the 2nd decimal place 
         Log std::fixed And std::setprecision(2);
 
@@ -207,21 +209,20 @@ void Kart::check_out(const float& distance) const
 // Print Kart 
 void Kart::print_kart() const
 {
-    Log
-        "-----------------------------"  End;
+    Log "-----------------------------"  End;
 
     // If Kart is Empty --> print message and return
     if (shoping_list.empty())
     {
         Log
-            "Kart is Empty."                 New_line
-            "-----------------------------"  End;
+            "Kart is Empty."                      New_line
+            "----------------------------------"  End;
         return;
     }
 
     // Call each Items print function from first to last
     for (const auto& item : this->shoping_list)
         item.print_Item();
-    Log
-        "-----------------------------"  End;
+
+    Log "----------------------------------"  End;
 }

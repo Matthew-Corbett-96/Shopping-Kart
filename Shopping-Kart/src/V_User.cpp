@@ -34,8 +34,8 @@ V_User::V_User(const std::string& name)
     // If name is over 25 characters, throw Error. 
     if (name.size() > 25)
     {
-        throw std::length_error("Name Can Only Be 25 Characters.\n");
         user_name = "N/A"; 
+        throw std::length_error("Name Can Only Be 25 Characters.");
     }
     else
 	    this->user_kart.set_name(user_name);
@@ -48,8 +48,8 @@ V_User::V_User(const std::string& name, const std::string& address)
 {
     if (name.size() > 25)
     {
-        throw std::length_error("Name Can Only Be 25 Characters.\n");
         user_name = "N/A";
+        throw std::length_error("Name Can Only Be 25 Characters.");
     }
 	this->user_kart.set_name(user_name);
 }
@@ -60,13 +60,13 @@ V_User::V_User(const std::string& name, const std::string& address, const std::s
 {
     if (name.size() > 25)
     {
-        throw std::length_error("Name Can Only Be 25 Characters.\n");
         user_name = "N/A";
+        throw std::length_error("Name Can Only Be 25 Characters.");
     }
     if (user_phone_number.size() > 13)
     {
-        throw std::length_error("Phone Number Must be Valid Length.\n");
         user_phone_number = "N/A";
+        throw std::length_error("Phone Number Must be Valid Length.");
     }
 	this->user_kart.set_name(user_name);
 }
@@ -89,8 +89,8 @@ void V_User::set_user_name(const std::string& name)
 {
     if (name.size() > 25)
     {
-        throw std::length_error("Name Can Only Be 25 Characters.\n");
         user_name = "N/A";
+        throw std::length_error("Name Can Only Be 25 Characters.");
         return;
     }
 	this->user_name = name;
@@ -105,8 +105,8 @@ void V_User::set_user_phone(const std::string& phone_number)
 { 
     if (user_phone_number.size() > 12)
     {
-        throw std::length_error("Phone Number Must be Valid Length.\n");
         user_phone_number = "N/A";
+        throw std::length_error("Phone Number Must be Valid Length.");
     }
     this->user_phone_number = phone_number; 
 }
@@ -135,10 +135,10 @@ void V_User::add_items_to_kart()
     Log
         "---------------------------------------------------" New_line
         "     Type the item's name, followed by a '/'       " New_line
-        "---------------------------------------------------" New_line
-        "Enter Item name: ";  std::cin.get(input1, 50, '/'); std::cin.ignore(1);
-    Log "Enter Item price: "; std::cin.get(input2, 50, '/'); std::cin.ignore(1);
-    Log "Quantity of item: "; std::cin.get(input3, 5, '/'); std::cin.ignore(1);
+        "---------------------------------------------------" End;
+    Log "Enter Item name: " ;                                 std::cin.get(input1, 50, '/'); std::cin.ignore(2);
+    Log "Enter Item price: ";                                 std::cin.get(input2, 50, '/'); std::cin.ignore(2);
+    Log "Quantity of item: ";                                 std::cin.get(input3, 5, '/');  std::cin.ignore(1);
 
     // Variables 
     std::string name = input1;
@@ -147,7 +147,8 @@ void V_User::add_items_to_kart()
     quantity = atoi(input3);
 
     // Create number of item specififed
-    for (int i = 0; i < quantity; i++) this->user_kart.add_item(name, price);
+    for (int i = 0; i < quantity; i++) 
+        this->user_kart.add_item(name, price);
 
     // Add the Items to the Users History Stack 
     for (int i = 0; i < quantity; i++) 
@@ -162,7 +163,7 @@ void V_User::add_items_to_kart()
     // Print to console
     Log
         "---------------------------------------------------" New_line
-        "                  " And name And " Added to Kart."   New_line
+        "               " And name And " Added to Kart."      New_line
         "---------------------------------------------------" End;
  
     using namespace std::chrono_literals;

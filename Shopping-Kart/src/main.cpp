@@ -16,11 +16,11 @@ int main()
     
     try
     {
-        //  Vars Needed to create Profile // Stack Allocated 
-        std::unique_ptr<V_User> p_Current_User; // pointer to current user 
-        char input1[25], input2[25], input3[25], input4; //input from user 
-        std::string name, address, phone_number; // vars for information 
-        bool active_kart = true; //keeps track if application still needs to be open 
+        //  Vars Needed to create Profile                // Stack Allocated 
+        std::unique_ptr<V_User> p_Current_User;          // pointer to current user 
+        char input1[25], input2[25], input3[25], input4; // input from user 
+        std::string name, address, phone_number;         // vars for information 
+        bool active_kart(true);                          // keeps track if application still needs to be open 
 
         // Clear Screen for Application
         Clear_Screen;
@@ -32,8 +32,8 @@ int main()
             "-      Lets set up your profile.     -"  New_line
             "-   Type Information followed by '/' -"  New_line
             "--------------------------------------"  End;
-        Log "Name         :";                         std::cin.get(input1, 25, '/'); std::cin.ignore(1);
-        Log "Address      :";                         std::cin.get(input2, 25, '/'); std::cin.ignore(1);
+        Log "Name         :";                         std::cin.get(input1, 25, '/'); std::cin.ignore(2);
+        Log "Address      :";                         std::cin.get(input2, 25, '/'); std::cin.ignore(2);
         Log "Phone Number :";                         std::cin.get(input3, 25, '/'); std::cin.ignore(1);
         Log "Like to be a Gold Member? (y/n): ";      Get input4; 
 
@@ -60,7 +60,7 @@ int main()
         {
             Log
                 "######################################################"  New_line
-                "      Gold Account Created For " And name                New_line
+                "           Gold Account Created For " And name           New_line
                 "Type the Number of the Operation You Would Like to Do "  New_line
                 "######################################################"  End;
         }
@@ -68,7 +68,7 @@ int main()
         {
             Log
                 "------------------------------------------------------"  New_line
-                "        Account Created For " And name                   New_line
+                "            Account Created For " And name               New_line
                 "Type the Number of the Operation You Would Like to Do:"  New_line
                 "------------------------------------------------------"  End;
         }
@@ -83,6 +83,22 @@ int main()
         {
             int operation(0);
             // Main Menu
+            if (input4 == 'y')
+            {
+                Log
+                    "######################################################"  New_line
+                    "                 Gold Account: " And name                New_line
+                    "Type the Number of the Operation You Would Like to Do "  New_line
+                    "######################################################"  End;
+            }
+            else
+            {
+                Log
+                    "------------------------------------------------------"  New_line
+                    "                 Account: " And name                     New_line
+                    "Type the Number of the Operation You Would Like to Do:"  New_line
+                    "------------------------------------------------------"  End;
+            }
             Log
                 "1.) Add item to Kart."           New_line
                 "2.) Retrive Item Information."   New_line
@@ -121,7 +137,7 @@ int main()
         }
     }
 
-    // Error Handeling -------------------------------------------------------------------
+    //Error Handeling---------------------------------------------------------------------
     catch (std::invalid_argument error) { Log "Invalid Argument: " And error.what() End; }
     catch (std::range_error      error) { Log "Range Error: "      And error.what() End; }
     catch (std::length_error     error) { Log "Length Error: "     And error.what() End; }
