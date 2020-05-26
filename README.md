@@ -17,22 +17,24 @@ __Amazon Like Shopping Kart Console Application__ _-By Matthew J. Corbett_
 ## Game Loop Draft 1   
 _Last Updated 5/26/2020_
 
-`start_screen() // get user info and create profile & push to the container of users` 
+`start_screen(); // get user info and create profile & push to the container of users
 
-`main_game_loop()`
-`{`
-  `bool shopping(true) //var to keep track if we avtivly using the application `
+main_game_loop();
+{
+  bool shopping(true); //var to keep track if we avtivly using the application 
 
-  `while(shopping)`
-  `{`
-	`std::unique_ptr<V_User> user // pointer to a user in the map of user
+  while(shopping)
+  {
+	std::unique_ptr<V_User> user // pointer to a user in the map of user
+	
 	choose_user(user, shopping) // choose which user you want to user or choose to exit
-	while (active_session)`
-	`{
+	
+	while (active_session)
+	{
 		unsigned int op(0); // var for chosing an operation 
-		choose_operation(int op); // decide which operation to do and return the number `
+		choose_operation(int op); // decide which operation to do and return the number 
 
-		``switch (op)
+		`switch (op)
 			case 1: 
 				clear_screen();
 				add_items(V_User user);
@@ -72,14 +74,15 @@ _Last Updated 5/26/2020_
 				break;
 				
 				
-	}`
+	}
 
-  `}
+  }
 
   good_bye(); prints goodbye message to the user and sleeps for 5 seconds;
+  
   return; 
-} // end of main game loop 
-`
+  
+} // end of main game loop `
 
 
 
