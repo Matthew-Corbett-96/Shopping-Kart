@@ -1,7 +1,7 @@
 #include "Normal_User.h"
 #include "Gold_User.h"
-#include <unordered_map>
 #include <Windows.h>
+#include "User_Data_Base.h"
 
 // Name Spaces 
 using namespace std::chrono_literals;
@@ -16,20 +16,23 @@ using namespace std::chrono_literals;
 #define Get std::cin >> 
 #define AAnd >>
 
+
 // Globals--------------------------------------------------------
-// Container of all the Users
-static std::unordered_map<std::string, V_User*> users;
-// bool keeping track of if the main application loop is active 
+// keeping track of the current operation taking place
 static unsigned short operation(0);
 // pointer to current user 
 static V_User* p_Current_User = nullptr;
+// DataBase of All the Users 
+User_Data_Base* User_Data_Base::instance = 0;
+User_Data_Base* Storage = User_Data_Base::Access_Data_Base();
+
 
 // Deffinitions -------------------------------------------------
 void start_Screen();
 void main_application();
-void choose_User(bool&);
+void change_User(bool&);
 void create_User(const char& type,const std::string, const std::string, const std::string);
-void choose_Operation(unsigned short&,V_User*);
+void choose_Operation();
 //void add_items(V_User& user); //init user's add func
 //void remove_items(V_User& user);
 //void get_info(V_User& user);
@@ -39,17 +42,36 @@ void choose_Operation(unsigned short&,V_User*);
 //void check_out(V_User& user);
 //void goodbye(); // end application and say goodbye to users 
 
+
+
 int main()
 {
-    
-    
     try
     {
         // Run Start Screen 
-        start_Screen(); 
-        
+        //start_Screen(); 
+        Normal_User user("Matthew", "12 Lorine rd.", "506-546-5263");
+        Gold_User otherUser("Bobby Bank", "33 Hopin Hill Ave.", "458-856-4785");
+        V_User* pointer = &user;
+        V_User* pointer1 = &otherUser;
+
+        // Adding Users
+        Storage->add(pointer);
+        Storage->add(pointer1);
+
+        // Remove a User 
+        Storage->remove("Bobby Bank");
+
+        // Get User to Pointer 
+        Storage->get_User("Matthew",p_Current_User);
+        Log
+            p_Current_User->get_user_name   ()    New_line
+            p_Current_User->get_user_address()    New_line
+            p_Current_User->get_user_phone  ()    New_line
+            p_Current_User->get_Gold_Status ()    End;
+        //
         // Run Main Application 
-        main_application(); 
+        //main_application(); 
         
         //    switch (operation)
         //    {
@@ -93,7 +115,6 @@ int main()
 
     return 0;
 }
-
 
 
 // Main UX && UI Functions -----------------------------------------
@@ -147,7 +168,6 @@ void start_Screen()
     }
 
     // Wait 3 seconds then clear the screen 
-    using namespace std::chrono_literals;
     std::this_thread::sleep_for(5s);
     Clear_Screen;
 }
@@ -161,10 +181,10 @@ void main_application()
 
     while (active_session)
     {
-        choose_User(active_session); 
+        change_User(active_session); 
         while (still_shopping)
         {
-            choose_Operation(operation, p_Current_User);
+            choose_Operation();
             return;
         }
     }
@@ -172,7 +192,7 @@ void main_application()
 }
 
 // Choosing a User 
-void choose_User(bool& active)
+void change_User(bool& active)
 {
    
     
@@ -189,7 +209,7 @@ void choose_User(bool& active)
 
         // Show the User the List of Users to Choose from
         int counter(1);
-        for (const auto& user : users)
+        for (const auto& user : Storage->users)
         {
             Log counter And ".)" And user.first End;
             counter++;
@@ -197,7 +217,7 @@ void choose_User(bool& active)
 
         // get the input and point the correct User to the pointer 
         char user_name[25];
-        Log "Name of User: "; std::cin.ignore(1); std::cin.get(user_name, 25, '/'); std::cin.ignore(1);
+        Log "Name of User: "; std::cin.ignore(1); std::cin.get(user_name, 25, '\n'); std::cin.ignore(1);
 
         // if user chooses to exit program return 
         if (user_name == "0")
@@ -207,9 +227,9 @@ void choose_User(bool& active)
         }
 
         // Check if a Valid User : if not then try again 
-        if (users.count(user_name))
+        if (Storage->users.count(user_name))
         {
-            p_Current_User = users.at(user_name);
+            Storage->get_User(user_name, p_Current_User);
             break;
         }
         else
@@ -224,24 +244,24 @@ void choose_User(bool& active)
     Clear_Screen;
 }
 
-void choose_Operation(unsigned short& operation, V_User* user) 
+void choose_Operation() 
 {
     // Main Menu
-    if (user->get_Gold_Status())
+    if (p_Current_User->get_Gold_Status())
     {
         Log
-            "######################################################"      New_line
-            "                 Gold Account: " And user->get_user_name()   New_line
-            " Type the Number of the Action You Would Like to Take "      New_line
-            "######################################################"      End;
+            "######################################################"                New_line
+            "                 Gold Account: " And p_Current_User->get_user_name()   New_line
+            " Type the Number of the Action You Would Like to Take "                New_line
+            "######################################################"                End;
     }
     else
     {
         Log
-            "======================================================"  New_line
-            "                 Account: " And user->get_user_name()    New_line
-            " Type the Number of the Action You Would Like to Take "  New_line
-            "======================================================"  End;
+            "======================================================"                New_line
+            "                 Account: " And p_Current_User->get_user_name()        New_line
+            " Type the Number of the Action You Would Like to Take "                New_line
+            "======================================================"                End;
     }
     Log
         "Kart:"                           New_line 
@@ -255,10 +275,11 @@ void choose_Operation(unsigned short& operation, V_User* user)
         "7.) See User History "           New_line
         "8.) See Profile "                New_line
         "9.) Edit Profile "               New_line
-        "Action: "; Get operation;        Skip;
+        "Action: "; std::cin.get(); 
 
-
-    Log operation And " Hazaaaaaaaaah" End; 
+    //read input from key board 
+    if (GetAsyncKeyState((unsigned short)'0') & 0X8000)
+        Log '0' End; 
 }
 
 
@@ -266,18 +287,18 @@ void choose_Operation(unsigned short& operation, V_User* user)
 // Commponent Functions --------------------------------------------
 // create a user 
 void create_User(
-    const char& type, const std::string name, const std::string phone_num, const std::string address)
+    const char& type, const std::string name, const std::string address, const std::string phone_num)
 {
     // Currently Using Raw Pointers --> will need to be fixed lator 
     if (type == 'y')
     {
         V_User* user = new Gold_User(name, address, phone_num);
-        users.emplace(name, user);
+        Storage->add(user);
     }
     else
     {
         V_User* user = new Normal_User(name, address, phone_num);
-        users.emplace(name, user);
+        Storage->add(user);
     }
 }
 
@@ -288,5 +309,3 @@ void create_User(
 
 
 
-//read input from key board 
-//if (GetAsyncKeyState((unsigned short)'0') & 0X8000)

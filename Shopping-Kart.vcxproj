@@ -31,6 +31,7 @@
     <ClInclude Include="Shopping-Kart\src\Normal_User.h" />
     <ClInclude Include="Shopping-Kart\src\Item.h" />
     <ClInclude Include="Shopping-Kart\src\Kart.h" />
+    <ClInclude Include="Shopping-Kart\src\User_Data_Base.h" />
     <ClInclude Include="Shopping-Kart\src\V_User.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
