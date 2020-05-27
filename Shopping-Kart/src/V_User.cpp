@@ -71,6 +71,53 @@ V_User::V_User(const std::string& name, const std::string& address, const std::s
 	this->user_kart.set_name(user_name);
 }
 
+// Default Constructor w/ status 
+V_User::V_User(bool status) 
+    : Gold_Status(status) {}
+
+// Constructor with name and status 
+V_User::V_User(const std::string& name, bool status)
+    : user_name(name), Gold_Status(status)
+{
+    // If name is over 25 characters, throw Error. 
+    if (name.size() > 25)
+    {
+        user_name = "N/A";
+        throw std::length_error("Name Can Only Be 25 Characters.");
+    }
+    else
+        this->user_kart.set_name(user_name);
+}
+
+
+// Constructor with name and adress 
+V_User::V_User(const std::string& name, const std::string& address, bool status)
+    : user_name(name), user_address(address), Gold_Status(status)
+{
+    if (name.size() > 25)
+    {
+        user_name = "N/A";
+        throw std::length_error("Name Can Only Be 25 Characters.");
+    }
+    this->user_kart.set_name(user_name);
+}
+
+// Constructor with all data
+V_User::V_User(const std::string& name, const std::string& address, const std::string& phone_number, bool status)
+    : user_name(name), user_address(address), user_phone_number(phone_number), Gold_Status(status)
+{
+    if (name.size() > 25)
+    {
+        user_name = "N/A";
+        throw std::length_error("Name Can Only Be 25 Characters.");
+    }
+    if (user_phone_number.size() > 13)
+    {
+        user_phone_number = "N/A";
+        throw std::length_error("Phone Number Must be Valid Length.");
+    }
+    this->user_kart.set_name(user_name);
+}
 // Destructors-----------------------------
 //-----------------------------------------
 //-----------------------------------------

@@ -20,12 +20,18 @@ protected:
 	std::string user_phone_number = "N/A";
 	// User's purchase History w/ time stamps 
 	std::list<Item> user_purchase_history;
+	// Gold Status 
+	bool Gold_Status = false; 
 public:
 	// Constructors 
 	V_User();
 	V_User(const std::string&);
 	V_User(const std::string&, const std::string&);
 	V_User(const std::string&, const std::string&, const std::string&);
+	V_User(bool);
+	V_User(const std::string&, bool);
+	V_User(const std::string&, const std::string&, bool);
+	V_User(const std::string&, const std::string&, const std::string&, bool);
 
 	// Destructor -- Virtual 
 	virtual ~V_User();
@@ -39,6 +45,7 @@ public:
 	virtual const std::string& get_user_name   () const;
 	virtual const std::string& get_user_address() const;
 	virtual const std::string& get_user_phone  () const;
+	virtual const bool         get_Gold_Status () const = 0; 
 
 	// Specialty Functions 
 	virtual void print_user_history() const = 0; 

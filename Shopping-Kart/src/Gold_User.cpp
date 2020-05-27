@@ -25,19 +25,20 @@
 // ----------------------------------------
 
 // Default Constructor
-Gold_User::Gold_User() {}
+Gold_User::Gold_User()
+    :V_User(true) {}
 
 // Constructor with User Name
 Gold_User::Gold_User(const std::string& name)
-	: V_User(name) {}
+	: V_User(name, true) {}
 
 // Constructor with Name and Address 
 Gold_User::Gold_User(const std::string& name, const std::string& address)
-	: V_User(name, address) {}
+	: V_User(name, address, true) {}
 
 // Constructor with all attributes needed 
 Gold_User::Gold_User(const std::string& name, const std::string& address, const std::string& phone_number)
-	: V_User(name, address, phone_number) {}
+	: V_User(name, address, phone_number, true) {}
 
 // Destructors-----------------------------
 //-----------------------------------------
@@ -46,6 +47,9 @@ Gold_User::Gold_User(const std::string& name, const std::string& address, const 
 
 // Default Destructor
 Gold_User::~Gold_User() {}
+
+// Get Gold Status 
+const bool Gold_User::get_Gold_Status() const { return this->Gold_Status == true; }
 
 // Specialty Functions---------------------
 //-----------------------------------------
