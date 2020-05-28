@@ -18,6 +18,9 @@ using namespace std::chrono_literals;
 
 
 // Globals--------------------------------------------------------
+  // bool keeping track if user is still shopping
+static bool still_shopping(true);
+static bool active_session(true);
 // keeping track of the current operation taking place
 static unsigned short operation(0);
 // pointer to current user 
@@ -33,6 +36,7 @@ void main_application();
 void change_User(bool&);
 void create_User(const char& type,const std::string, const std::string, const std::string);
 void choose_Operation();
+void print_options();
 //void add_items(V_User& user); //init user's add func
 //void remove_items(V_User& user);
 //void get_info(V_User& user);
@@ -49,59 +53,12 @@ int main()
     try
     {
         // Run Start Screen 
-        //start_Screen(); 
-        Normal_User user("Matthew", "12 Lorine rd.", "506-546-5263");
-        Gold_User otherUser("Bobby Bank", "33 Hopin Hill Ave.", "458-856-4785");
-        V_User* pointer = &user;
-        V_User* pointer1 = &otherUser;
-
-        // Adding Users
-        Storage->add(pointer);
-        Storage->add(pointer1);
-
-        // Remove a User 
-        Storage->remove("Bobby Bank");
-
-        // Get User to Pointer 
-        Storage->get_User("Matthew",p_Current_User);
-        Log
-            p_Current_User->get_user_name   ()    New_line
-            p_Current_User->get_user_address()    New_line
-            p_Current_User->get_user_phone  ()    New_line
-            p_Current_User->get_Gold_Status ()    End;
-        //
-        // Run Main Application 
-        //main_application(); 
+        start_Screen(); 
         
-        //    switch (operation)
-        //    {
-        //    case 1:
-        //        Clear_Screen;
-        //        user.add_items_to_kart();
-        //        break;
-
-        //    case 2:
-        //        Clear_Screen;
-        //        user.get_info();
-        //        break;
-
-        //    case 3:
-        //        Clear_Screen;
-        //        user.print_current_kart();
-        //        break;
-
-        //    case 4:
-        //        Clear_Screen;
-        //        user.check_out();
-        //        active_kart = false;
-        //        break;
-
-        //    default:
-        //        Clear_Screen;
-        //        Log "Invalid Number. Must be 1 - 4." End;
-        //        break;
-        //    }
-        //}
+        // Run Main Application 
+        main_application(); 
+        
+        
     }
 
     //Error Handeling---------------------------------------------------------------------
@@ -135,9 +92,9 @@ void start_Screen()
         "-      Lets set up your profile.     -"  New_line
         "-   Type Information followed by '/' -"  New_line
         "--------------------------------------"  End;
-    Log "Name         :";                         std::cin.get(input1, 25, '/'); std::cin.ignore(2);
-    Log "Address      :";                         std::cin.get(input2, 25, '/'); std::cin.ignore(2);
-    Log "Phone Number :";                         std::cin.get(input3, 25, '/'); std::cin.ignore(1);
+    Log "Name         :";                         std::cin.get(input1, 25, '\n'); std::cin.ignore(1);
+    Log "Address      :";                         std::cin.get(input2, 25, '\n'); std::cin.ignore(1);
+    Log "Phone Number :";                         std::cin.get(input3, 25, '\n'); std::cin.ignore(1);
     Log "Like to be a Gold Member? (y/n): ";      Get input4;
 
     // Assign input to temp vars // Stack Allocated 
@@ -175,9 +132,6 @@ void start_Screen()
 // Main Application Loop
 void main_application()
 {
-    // bool keeping track if user is still shopping
-    bool still_shopping(true);
-    bool active_session(true);
 
     while (active_session)
     {
@@ -217,7 +171,7 @@ void change_User(bool& active)
 
         // get the input and point the correct User to the pointer 
         char user_name[25];
-        Log "Name of User: "; std::cin.ignore(1); std::cin.get(user_name, 25, '\n'); std::cin.ignore(1);
+        Log "Name of User: "; std::cin.ignore(1); std::cin.get(user_name, 25, '\n');
 
         // if user chooses to exit program return 
         if (user_name == "0")
@@ -244,42 +198,80 @@ void change_User(bool& active)
     Clear_Screen;
 }
 
+// Main Menu Operations 
 void choose_Operation() 
 {
-    // Main Menu
-    if (p_Current_User->get_Gold_Status())
-    {
-        Log
-            "######################################################"                New_line
-            "                 Gold Account: " And p_Current_User->get_user_name()   New_line
-            " Type the Number of the Action You Would Like to Take "                New_line
-            "######################################################"                End;
-    }
-    else
-    {
-        Log
-            "======================================================"                New_line
-            "                 Account: " And p_Current_User->get_user_name()        New_line
-            " Type the Number of the Action You Would Like to Take "                New_line
-            "======================================================"                End;
-    }
-    Log
-        "Kart:"                           New_line 
-        "1.) Add item to Kart."           New_line
-        "2.) Remove Item From Kart"       New_line
-        "3.) Get Item Information"        New_line
-        "4.) Update Item Information"     New_line
-        "5.) Show Kart Status "           New_line
-        "6.) Checkout Kart"               New_line
-        "User: "                          New_line
-        "7.) See User History "           New_line
-        "8.) See Profile "                New_line
-        "9.) Edit Profile "               New_line
-        "Action: "; std::cin.get(); 
+    // Choose Print Screen Based on if User is Gold Status
+    print_options();
 
-    //read input from key board 
-    if (GetAsyncKeyState((unsigned short)'0') & 0X8000)
-        Log '0' End; 
+    // Waiting for User Input 
+    while (still_shopping)
+    {
+        // Read input from key board, clear the screen,
+        // And then go to apropriet screen 
+
+        // User Exits Shopping && Goes to User menu
+        if (GetAsyncKeyState((unsigned short)'0') & 0X8000)
+        {
+            Clear_Screen;
+            still_shopping = false;  
+        }
+
+        // launch adding items
+        if (GetAsyncKeyState((unsigned short)'1') & 0X8000)
+        {
+            Clear_Screen;
+            p_Current_User->add_items_to_kart();  
+            print_options();
+        }
+
+        // launch remove item
+        if (GetAsyncKeyState((unsigned short)'2') & 0X8000)
+        {
+            Clear_Screen;
+            print_options();
+        }
+
+        // launch item info
+        if (GetAsyncKeyState((unsigned short)'3') & 0X8000)
+        {
+            Clear_Screen;
+            p_Current_User->get_info();  
+            print_options();
+        }
+
+        // print kart
+        if (GetAsyncKeyState((unsigned short)'4') & 0X8000)
+        {
+            Clear_Screen; 
+            p_Current_User->print_current_kart();  
+            print_options();
+        }
+
+        // Check Out
+        if (GetAsyncKeyState((unsigned short)'5') & 0X8000)
+        {
+            Clear_Screen;
+            p_Current_User->check_out();
+            print_options();
+        }
+
+        // See Shopping History 
+        if (GetAsyncKeyState((unsigned short)'6') & 0X8000)
+        {
+            Clear_Screen;
+            print_options();
+        }
+
+        // Launch Profile Page 
+        if (GetAsyncKeyState((unsigned short)'7') & 0X8000)
+        {
+            Clear_Screen;
+            print_options();
+        }
+
+    } // End of While Loop 
+
 }
 
 
@@ -302,7 +294,38 @@ void create_User(
     }
 }
 
-
+// Prints the Options Menu in the in Choose operations Tab
+void print_options()
+{
+    if (p_Current_User->get_Gold_Status())
+    {
+        Log
+            "######################################################"                New_line
+            "                 Gold Account: " And p_Current_User->get_user_name()   New_line
+            " Type the Number of the Action You Would Like to Take "                New_line
+            "######################################################"                End;
+    }
+    else
+    {
+        Log
+            "======================================================"                New_line
+            "                 Account: " And p_Current_User->get_user_name()        New_line
+            " Type the Number of the Action You Would Like to Take "                New_line
+            "              Or Press \"0\" to Sign Out              "                New_line
+            "======================================================"                End;
+    }
+    Log
+        "Kart:"                           New_line
+        "1.) Add item to Kart."           New_line
+        "2.) Remove Item From Kart"       New_line
+        "3.) Item Information"            New_line
+        "4.) See My Kart"                 New_line
+        "5.) Checkout"                    New_line
+        "User: "                          New_line
+        "6.) Your Shopping History "      New_line
+        "7.) Your Profile "               New_line
+        "Action: ";
+}
 
 
 
