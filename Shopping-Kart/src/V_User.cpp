@@ -172,6 +172,9 @@ const std::string& V_User::get_user_address() const { return this->user_address;
 // Get User's Phone Number 
 const std::string& V_User::get_user_phone() const { return this->user_phone_number; }
 
+// Access to the Users Kart for Item Manipulation and removing 
+Kart& V_User::accessKart() { return this->user_kart; }
+
 // Adding Item to the Kart 
 void V_User::add_items_to_kart()
 {
@@ -181,11 +184,11 @@ void V_User::add_items_to_kart()
     // Get Item information from User
     Log
         "---------------------------------------------------" New_line
-        "     Type the item's name, followed by a '/'       " New_line
+        "        Type the item info, then press Enter       " New_line
         "---------------------------------------------------" End;
-    Log "Enter Item name: " ;                                 std::cin.get(input1, 50, '/'); std::cin.ignore(2);
-    Log "Enter Item price: ";                                 std::cin.get(input2, 50, '/'); std::cin.ignore(2);
-    Log "Quantity of item: ";                                 std::cin.get(input3, 5, '/');  std::cin.ignore(1);
+    Log "Enter Item name: ";            std::cin.ignore(1);   std::cin.get(input1, 50, '\n'); std::cin.ignore(1);
+    Log "Enter Item price: ";                                 std::cin.get(input2, 50, '\n'); std::cin.ignore(1);
+    Log "Quantity of item: ";                                 std::cin.get(input3, 5, '\n');  std::cin.ignore(1);
 
     // Variables 
     std::string name = input1;

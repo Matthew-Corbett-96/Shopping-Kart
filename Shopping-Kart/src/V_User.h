@@ -47,6 +47,9 @@ public:
 	virtual const std::string& get_user_phone  () const;
 	virtual const bool         get_Gold_Status () const = 0; 
 
+	// Kart Access
+	virtual Kart& accessKart();
+
 	// Specialty Functions 
 	virtual void print_user_history() const = 0; 
 	virtual void add_items_to_kart ();

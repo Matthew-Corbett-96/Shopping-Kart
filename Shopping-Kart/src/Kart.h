@@ -38,6 +38,9 @@ public:
     void add_item(const std::string&, const float&);
     void add_item(const Item&);
 
+    // Remover 
+    void remove_item(const int);
+
     // Calculate Total Price   
     void check_out(const float&) const;
 

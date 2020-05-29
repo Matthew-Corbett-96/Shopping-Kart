@@ -3,10 +3,11 @@
 #include <Windows.h>
 #include "User_Data_Base.h"
 
-// Name Spaces 
+// Name Spaces -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 using namespace std::chrono_literals;
+using namespace std::chrono; 
 
-// Personal Logging Macros
+// Personal Logging Macros -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 #define Log std::cout << 
 #define And << 
 #define End << std::endl 
@@ -16,65 +17,55 @@ using namespace std::chrono_literals;
 #define Get std::cin >> 
 #define AAnd >>
 
-
-// Globals--------------------------------------------------------
-  // bool keeping track if user is still shopping
-static bool still_shopping(true);
-static bool active_session(true);
-// keeping track of the current operation taking place
-static unsigned short operation(0);
+// Globals -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+  // keep track if user is still shopping
+static bool still_shopping(true), active_session(true);
 // pointer to current user 
-static V_User* p_Current_User = nullptr;
+static V_User* p_Current_User(nullptr);
 // DataBase of All the Users 
 User_Data_Base* User_Data_Base::instance = 0;
 User_Data_Base* Storage = User_Data_Base::Access_Data_Base();
 
-
-// Deffinitions -------------------------------------------------
+// Deffinitions -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 void start_Screen();
 void main_application();
 void change_User(bool&);
 void create_User(const char& type,const std::string, const std::string, const std::string);
+// void remove_User(const std::string&); 
+// void update_User(); // interactive screen 
 void choose_Operation();
 void print_options();
-//void add_items(V_User& user); //init user's add func
-//void remove_items(V_User& user);
-//void get_info(V_User& user);
+void remove_items();
 //void edit_item(V_User& user);
-//void print_kart(V_User& user);
 //void print_history(V_User& user);
-//void check_out(V_User& user);
-//void goodbye(); // end application and say goodbye to users 
+void goodbye_Screen();
 
-
-
+// Main Application -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 int main()
 {
     try
     {
         // Run Start Screen 
         start_Screen(); 
-        
         // Run Main Application 
         main_application(); 
-        
-        
+        // Run Goodbye Screen 
+        goodbye_Screen(); 
     }
-
-    //Error Handeling---------------------------------------------------------------------
+    //Error Handeling------------------------------------------------------------------------
     catch (std::invalid_argument error) { Log "Invalid Argument: " And error.what()    End; }
     catch (std::range_error      error) { Log "Range Error: "      And error.what()    End; }
     catch (std::length_error     error) { Log "Length Error: "     And error.what()    End; }
     catch (std::domain_error     error) { Log "Domain Error. "                         End; }
     catch (std::error_code       error) { Log "Other Error: "      And error.message() End; }
     catch (std::out_of_range     error) { Log "Out of Range: "     And error.what()    End; }
-    //------------------------------------------------------------------------------------
-
+    //---------------------------------------------------------------------------------------
     return 0;
 }
 
 
 // Main UX && UI Functions -----------------------------------------
+
 // Welcome User and Create Profile 
 void start_Screen()
 {
@@ -128,79 +119,24 @@ void start_Screen()
     std::this_thread::sleep_for(5s);
     Clear_Screen;
 }
-
 // Main Application Loop
 void main_application()
 {
-
     while (active_session)
     {
         change_User(active_session); 
         while (still_shopping)
         {
             choose_Operation();
-            return;
         }
     }
     return;
 }
-
-// Choosing a User 
-void change_User(bool& active)
-{
-   
-    
-    while (true)
-    {
-        // Print Message to Console 
-        Log
-            "======================================="     New_line
-            "=      Choose a User to Sign into     ="     New_line
-            "=       Type the Name of the User     ="     New_line
-            "=         Or Press 0 to Exit          ="     New_line
-            "======================================="     New_line
-            "Users:"                                      End;
-
-        // Show the User the List of Users to Choose from
-        int counter(1);
-        for (const auto& user : Storage->users)
-        {
-            Log counter And ".)" And user.first End;
-            counter++;
-        }
-
-        // get the input and point the correct User to the pointer 
-        char user_name[25];
-        Log "Name of User: "; std::cin.ignore(1); std::cin.get(user_name, 25, '\n');
-
-        // if user chooses to exit program return 
-        if (user_name == "0")
-        {
-            active = false;
-            return;
-        }
-
-        // Check if a Valid User : if not then try again 
-        if (Storage->users.count(user_name))
-        {
-            Storage->get_User(user_name, p_Current_User);
-            break;
-        }
-        else
-        {
-            Log "User Dose Not Exist." End;
-            std::this_thread::sleep_for(3s);
-            Clear_Screen;
-            continue;
-        }
-    }
-    //clear screen and return 
-    Clear_Screen;
-}
-
 // Main Menu Operations 
 void choose_Operation() 
 {
+    // For when it is the 2nd User to enter the Application
+    still_shopping = true;
     // Choose Print Screen Based on if User is Gold Status
     print_options();
 
@@ -228,7 +164,7 @@ void choose_Operation()
         // launch remove item
         if (GetAsyncKeyState((unsigned short)'2') & 0X8000)
         {
-            Clear_Screen;
+            remove_items();
             print_options();
         }
 
@@ -273,13 +209,25 @@ void choose_Operation()
     } // End of While Loop 
 
 }
-
-
+// Goodbye Message 
+void goodbye_Screen()
+{
+    // Clear the Screen 
+    Clear_Screen;
+    // goodbye Message 
+    Log
+        "======================================================="  New_line
+        "=Thanks For Shopping With Matty J's Online Shoopping !="  New_line
+        "=            Hope to see you Real Soon !              ="  New_line
+        "======================================================="  End;
+    // pause for 3 seconds 
+    std::this_thread::sleep_for(3s);
+}
 
 // Commponent Functions --------------------------------------------
+
 // create a user 
-void create_User(
-    const char& type, const std::string name, const std::string address, const std::string phone_num)
+void create_User(const char& type, const std::string name, const std::string address, const std::string phone_num)
 {
     // Currently Using Raw Pointers --> will need to be fixed lator 
     if (type == 'y')
@@ -293,7 +241,6 @@ void create_User(
         Storage->add(user);
     }
 }
-
 // Prints the Options Menu in the in Choose operations Tab
 void print_options()
 {
@@ -326,9 +273,86 @@ void print_options()
         "7.) Your Profile "               New_line
         "Action: ";
 }
+// Remove items from Active Kart 
+void remove_items()
+{
+    // Clear Screen 
+    Clear_Screen;
 
+    // Create index var 
+    int index(0);
 
+    // UI Here 
+    Log
+        "======================================================"  New_line
+        "=   Type the Index of the Item You Wish To Remove.   ="  New_line
+        "======================================================"  End;
+    p_Current_User->print_current_kart();
+    Log "Index: "; Get index;
 
+    // Access Kart 
+    p_Current_User->accessKart().remove_item(index);
 
+    // Clear the Screen 
+    Clear_Screen;
 
+    // Confirmation Screen 
+    Log 
+        "======================================================"  New_line
+        "=                Item Has Been Remove.               ="  New_line
+        "======================================================"  End;
 
+    // Pause 3 Seconds then clear screen again 
+    std::this_thread::sleep_for(3s);
+    Clear_Screen; 
+}
+// Choosing a User 
+void change_User(bool& active)
+{
+    while (true)
+    {
+        // Print Message to Console 
+        Log
+            "======================================="     New_line
+            "=      Choose a User to Sign into     ="     New_line
+            "=       Type the Name of the User     ="     New_line
+            "=         Or Press 0 to Exit          ="     New_line
+            "======================================="     New_line
+            "Users:"                                      End;
+
+        // Show the User the List of Users to Choose from
+        int counter(1);
+        for (const auto& user : Storage->users)
+        {
+            Log " " And counter And ".)" And user.first End;
+            counter++;
+        }
+
+        // get the input and point the correct User to the pointer 
+        char user_name[25];
+        Log "Name of User: "; std::cin.ignore(1); std::cin.get(user_name, 25, '\n');
+
+        // if user chooses to exit program return 
+        if (GetAsyncKeyState((unsigned short)'0'))
+        {
+            active = false;
+            break;
+        }
+
+        // Check if a Valid User : if not then try again 
+        if (Storage->users.count(user_name))
+        {
+            Storage->get_User(user_name, p_Current_User);
+            break;
+        }
+        else
+        {
+            Log "User Dose Not Exist." End;
+            std::this_thread::sleep_for(3s);
+            Clear_Screen;
+            continue;
+        }
+    }
+    //clear screen and return 
+    Clear_Screen;
+}
