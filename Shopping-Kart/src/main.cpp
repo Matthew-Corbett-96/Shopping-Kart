@@ -29,7 +29,7 @@ User_Data_Base* Storage = User_Data_Base::Access_Data_Base();
 // Deffinitions -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 void start_Screen();
 void main_application();
-void change_User(bool&);
+void change_User();
 void create_User(const char& type,const std::string, const std::string, const std::string);
 // void remove_User(const std::string&); 
 // void update_User(); // interactive screen 
@@ -46,11 +46,17 @@ int main()
     try
     {
         // Run Start Screen 
-        start_Screen(); 
-        // Run Main Application 
-        main_application(); 
+        start_Screen();
+        while (active_session)
+        {   
+            // Select User or create user then direct back to select User 
+            change_User();
+            if (active_session == false) break; 
+            // Run Operations Window Loop
+            choose_Operation();
+        }
         // Run Goodbye Screen 
-        goodbye_Screen(); 
+        goodbye_Screen();
     }
     //Error Handeling------------------------------------------------------------------------
     catch (std::invalid_argument error) { Log "Invalid Argument: " And error.what()    End; }
@@ -81,7 +87,6 @@ void start_Screen()
         "--------------------------------------"  New_line
         "-Welcome to Matty J's Online Shoping!-"  New_line
         "-      Lets set up your profile.     -"  New_line
-        "-   Type Information followed by '/' -"  New_line
         "--------------------------------------"  End;
     Log "Name         :";                         std::cin.get(input1, 25, '\n'); std::cin.ignore(1);
     Log "Address      :";                         std::cin.get(input2, 25, '\n'); std::cin.ignore(1);
@@ -124,11 +129,6 @@ void main_application()
 {
     while (active_session)
     {
-        change_User(active_session); 
-        while (still_shopping)
-        {
-            choose_Operation();
-        }
     }
     return;
 }
@@ -307,16 +307,17 @@ void remove_items()
     Clear_Screen; 
 }
 // Choosing a User 
-void change_User(bool& active)
+void change_User()
 {
     while (true)
     {
         // Print Message to Console 
         Log
             "======================================="     New_line
-            "=      Choose a User to Sign into     ="     New_line
+            "=    To Choose a User to Sign into    ="     New_line
             "=       Type the Name of the User     ="     New_line
-            "=         Or Press 0 to Exit          ="     New_line
+            "=   Type \"New\" to Create a New User  ="     New_line
+            "=         Type \"Exit\" to Exit        ="     New_line
             "======================================="     New_line
             "Users:"                                      End;
 
@@ -329,13 +330,14 @@ void change_User(bool& active)
         }
 
         // get the input and point the correct User to the pointer 
-        char user_name[25];
-        Log "Name of User: "; std::cin.ignore(1); std::cin.get(user_name, 25, '\n');
+        char user_n[25];
+        Log "Name of User: "; std::cin.ignore(1); std::cin.get(user_n, 25, '\n'); std::cin.ignore(1);
 
+        std::string user_name = user_n;
         // if user chooses to exit program return 
-        if (GetAsyncKeyState((unsigned short)'0'))
+        if (user_name == "Exit")
         {
-            active = false;
+            active_session = false;
             break;
         }
 

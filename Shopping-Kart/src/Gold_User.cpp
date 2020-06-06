@@ -117,10 +117,10 @@ void Gold_User::add_items_to_kart()
     Log
         "###################################################" New_line
         "|      Type the item's name, followed by a '/'    |" New_line
-        "###################################################" New_line
-        "Enter Item name: ";  std::cin.get(input1, 50, '/'); std::cin.ignore(1);
-    Log "Enter Item price: "; std::cin.get(input2, 50, '/'); std::cin.ignore(1);
-    Log "Quantity of item: "; std::cin.get(input3, 5, '/'); std::cin.ignore(1);
+        "###################################################" End;
+    Log "Enter Item name: ";            std::cin.ignore(1);   std::cin.get(input1, 50, '\n'); std::cin.ignore(1);
+    Log "Enter Item price: ";                                 std::cin.get(input2, 50, '\n'); std::cin.ignore(1);
+    Log "Quantity of item: ";                                 std::cin.get(input3, 5, '\n');  std::cin.ignore(1);
 
     // Variables 
     std::string name = input1;
@@ -129,12 +129,10 @@ void Gold_User::add_items_to_kart()
     quantity = atoi(input3);
 
     // Create number of item specififed
-    for (int i = 0; i < quantity; i++) 
-        this->user_kart.add_item(name, price);
-
     // Add the Items to the Users History Stack 
     for (int i = 0; i < quantity; i++)
     {
+        this->user_kart.add_item(name, price);
         std::unique_ptr<Item> tempitem = std::make_unique<Item>(name, price);
         this->user_purchase_history.emplace_back(*tempitem);
     }
@@ -147,4 +145,8 @@ void Gold_User::add_items_to_kart()
         "###################################################" New_line
         "|             " And name And " Added to Kart.     |" New_line
         "###################################################" End;
+
+    using namespace std::chrono_literals;
+    std::this_thread::sleep_for(3s);
+    Clear_Screen;
 }
