@@ -22,14 +22,15 @@ _Last Updated 5/26/2020_
  `main_game_loop()
   {
    bool shopping(true); //var to keep track if we avtivly using the application `
+   bool active_session(true);
 
-   `while(shopping)
+   `while(active_session)
    {
 	std::unique_ptr<V_User> user // pointer to a user in the map of user`
 	
 	`choose_user(user, shopping) // choose which user you want to user or choose to exit
 	
-	while (active_session)
+	while (shopping)
 	{
 		unsigned int op(0); // var for chosing an operation 
 		choose_operation(int op); // decide which operation to do and return the number 

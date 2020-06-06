@@ -1,10 +1,13 @@
 #pragma once 
 
-#include <iostream> 
-#include <string> 
-#include <iomanip>
-#include <exception>
-#include <stdexcept>
+#include <iostream>  // output to console 
+#include <string>    // use std::string type
+#include <iomanip>   // manipulate the console output 
+#include <exception> // exception handeling 
+#include <stdexcept> // more modern lib
+#include <chrono>    // modern c++ time 
+#include <ctime>     // conversion functions for c or c++ 
+#include <time.h>    // C time lib for back up 
 
 class Item
 {
@@ -13,6 +16,8 @@ private:
     std::string item_name = "N/A";
     // Price of Item 
     float item_price = 0.00f;
+    // Time Created 
+    char time_created[26];
 
 public:
     // Constructors
@@ -34,6 +39,7 @@ public:
     // Getters 
     const std::string get_name () const;
     const float       get_price() const;
+    const std::string get_time () const; 
 
     // Operator overloading 
     Item& operator= (const Item& item);

@@ -25,19 +25,20 @@
 // ----------------------------------------
 
 // Default Constructor
-Normal_User::Normal_User() {}
+Normal_User::Normal_User() 
+	: V_User(false) {}
 
 // Constructor with User Name
 Normal_User::Normal_User(const std::string& name)
-	: V_User(name) {}
+	: V_User(name, false) {}
 
 // Constructor with Name and Address 
 Normal_User::Normal_User(const std::string& name, const std::string& address)
-	: V_User(name, address) {}
+	: V_User(name, address, false) {}
 
 // Constructor with all attributes needed 
 Normal_User::Normal_User(const std::string& name, const std::string& address, const std::string& phone_number)
-	: V_User(name, address, phone_number) {}
+	: V_User(name, address, phone_number, false) {}
 
 // Destructors-----------------------------
 //-----------------------------------------
@@ -51,6 +52,9 @@ Normal_User::~Normal_User() {}
 //-----------------------------------------
 //-----------------------------------------
 //-----------------------------------------
+
+// Get Gold Status 
+const bool Normal_User::get_Gold_Status() const { return this->Gold_Status == true; }
 
 // Print User's History to the console // override
 void Normal_User::print_user_history() const { for(const auto& item : user_purchase_history) item.print_Item(); }

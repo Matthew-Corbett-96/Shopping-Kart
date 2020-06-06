@@ -50,5 +50,8 @@
     <ClInclude Include="Shopping-Kart\src\Gold_User.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Shopping-Kart\src\User_Data_Base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

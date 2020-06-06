@@ -3,8 +3,6 @@
 
 class Normal_User : public V_User
 {
-private:
-	static const bool Gold_Status = false; 
 public:
 	// Constructors 
 	Normal_User();
@@ -19,6 +17,7 @@ public:
 	
 
 	// Getters -- All Overridden 
+	const bool get_Gold_Status() const override; 
 
 	// Specialty Functions 
 	void print_user_history() const override;

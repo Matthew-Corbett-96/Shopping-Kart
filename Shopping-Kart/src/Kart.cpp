@@ -82,10 +82,10 @@ const Item& Kart::get_item(int index) const
 {
     // if Kart is empty then throw error
     if (shoping_list.empty()) 
-        throw std::length_error("Kart is Empty.\n");
+        throw std::length_error("Kart is Empty.");
     // if index is out of range then throw error
     if (index > list_length || index <= 0) 
-        throw std::range_error("Item Index is Out of Range.\n");
+        throw std::range_error("Item Index is Out of Range.");
 
     return shoping_list.at(--index);
 }
@@ -95,10 +95,10 @@ const float Kart::get_item_price(int index) const
 {
     // if Kart is empty then throw Error 
     if (shoping_list.empty()) 
-        throw std::length_error("Kart is Empty.\n");
+        throw std::length_error("Kart is Empty.");
     // if index is over the length then return the last element 
     if (index > list_length || index <= 0) 
-        throw std::range_error("Item Index is Out of Range.\n");
+        throw std::range_error("Item Index is Out of Range.");
 
     // If index is greater than 1 and less than length--> return item at the proper index 
     return shoping_list.at(--index).get_price();
@@ -109,10 +109,10 @@ const std::string Kart::get_item_name(int index) const
 {
     // if Kart is empty then return Error
     if (shoping_list.empty()) 
-        throw std::length_error("Kart is Empty.\n");
+        throw std::length_error("Kart is Empty.");
     // if index is out of Range then Throw Error
     if (index > list_length || index <= 0) 
-        throw std::range_error("Item Index is Out of Range.\n");
+        throw std::range_error("Item Index is Out of Range.");
 
     // If index is in Range then return item at the proper index 
     return shoping_list.at(--index).get_name();
@@ -152,6 +152,13 @@ void Kart::add_item(const Item& item)
     this->list_length++;
 }
 
+// Remove Item from the Kart 
+void Kart::remove_item(int index)
+{
+    this->shoping_list.erase(shoping_list.begin() + (--index));
+    this->list_length--;
+}
+
 // Calculate Total Price   
 void Kart::check_out(const float& distance) const
 {
@@ -168,6 +175,7 @@ void Kart::check_out(const float& distance) const
 
         // Logging the information 
         Log
+            "------------------------"        New_line
             "CHECKING OUT: " And kart_name    New_line
             "------------------------"        New_line
             "Item Total:  " And "$" And 0.00  New_line
@@ -209,20 +217,27 @@ void Kart::check_out(const float& distance) const
 // Print Kart 
 void Kart::print_kart() const
 {
-    Log "-----------------------------"  End;
+    // Counter Var
+    int counter(1);
+
+    Log "======================================================"  End;
 
     // If Kart is Empty --> print message and return
     if (shoping_list.empty())
     {
         Log
-            "Kart is Empty."                      New_line
-            "----------------------------------"  End;
+            "                    Kart is Empty."                      New_line
+            "======================================================"  End;
         return;
     }
 
     // Call each Items print function from first to last
     for (const auto& item : this->shoping_list)
+    {
+        Log " Index: " And counter End;
         item.print_Item();
+        counter++;
+    }
 
-    Log "----------------------------------"  End;
+    Log "======================================================"  End;
 }

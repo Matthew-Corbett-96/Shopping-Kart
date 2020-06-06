@@ -3,9 +3,6 @@
 
 class Gold_User : public V_User
 {
-private:
-	// Status of Gold Membership // static const 
-	static const bool Gold_Status = true;
 
 public:
 	// Constructors
@@ -18,7 +15,10 @@ public:
 	virtual ~Gold_User() override;
 
 	// Setters -- All From V_User
-	// Getters -- All From V_User 
+
+	// Getters  
+	const bool get_Gold_Status() const override;
+
 
 	// Specialty Functions
 	void print_user_history() const override;

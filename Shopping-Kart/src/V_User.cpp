@@ -71,6 +71,53 @@ V_User::V_User(const std::string& name, const std::string& address, const std::s
 	this->user_kart.set_name(user_name);
 }
 
+// Default Constructor w/ status 
+V_User::V_User(bool status) 
+    : Gold_Status(status) {}
+
+// Constructor with name and status 
+V_User::V_User(const std::string& name, bool status)
+    : user_name(name), Gold_Status(status)
+{
+    // If name is over 25 characters, throw Error. 
+    if (name.size() > 25)
+    {
+        user_name = "N/A";
+        throw std::length_error("Name Can Only Be 25 Characters.");
+    }
+    else
+        this->user_kart.set_name(user_name);
+}
+
+
+// Constructor with name and adress 
+V_User::V_User(const std::string& name, const std::string& address, bool status)
+    : user_name(name), user_address(address), Gold_Status(status)
+{
+    if (name.size() > 25)
+    {
+        user_name = "N/A";
+        throw std::length_error("Name Can Only Be 25 Characters.");
+    }
+    this->user_kart.set_name(user_name);
+}
+
+// Constructor with all data
+V_User::V_User(const std::string& name, const std::string& address, const std::string& phone_number, bool status)
+    : user_name(name), user_address(address), user_phone_number(phone_number), Gold_Status(status)
+{
+    if (name.size() > 25)
+    {
+        user_name = "N/A";
+        throw std::length_error("Name Can Only Be 25 Characters.");
+    }
+    if (user_phone_number.size() > 13)
+    {
+        user_phone_number = "N/A";
+        throw std::length_error("Phone Number Must be Valid Length.");
+    }
+    this->user_kart.set_name(user_name);
+}
 // Destructors-----------------------------
 //-----------------------------------------
 //-----------------------------------------
@@ -125,6 +172,9 @@ const std::string& V_User::get_user_address() const { return this->user_address;
 // Get User's Phone Number 
 const std::string& V_User::get_user_phone() const { return this->user_phone_number; }
 
+// Access to the Users Kart for Item Manipulation and removing 
+Kart& V_User::accessKart() { return this->user_kart; }
+
 // Adding Item to the Kart 
 void V_User::add_items_to_kart()
 {
@@ -134,11 +184,11 @@ void V_User::add_items_to_kart()
     // Get Item information from User
     Log
         "---------------------------------------------------" New_line
-        "     Type the item's name, followed by a '/'       " New_line
+        "        Type the item info, then press Enter       " New_line
         "---------------------------------------------------" End;
-    Log "Enter Item name: " ;                                 std::cin.get(input1, 50, '/'); std::cin.ignore(2);
-    Log "Enter Item price: ";                                 std::cin.get(input2, 50, '/'); std::cin.ignore(2);
-    Log "Quantity of item: ";                                 std::cin.get(input3, 5, '/');  std::cin.ignore(1);
+    Log "Enter Item name: ";            std::cin.ignore(1);   std::cin.get(input1, 50, '\n'); std::cin.ignore(1);
+    Log "Enter Item price: ";                                 std::cin.get(input2, 50, '\n'); std::cin.ignore(1);
+    Log "Quantity of item: ";                                 std::cin.get(input3, 5, '\n');  std::cin.ignore(1);
 
     // Variables 
     std::string name = input1;
@@ -147,12 +197,10 @@ void V_User::add_items_to_kart()
     quantity = atoi(input3);
 
     // Create number of item specififed
-    for (int i = 0; i < quantity; i++) 
-        this->user_kart.add_item(name, price);
-
     // Add the Items to the Users History Stack 
     for (int i = 0; i < quantity; i++) 
     {
+        this->user_kart.add_item(name, price);
         std::unique_ptr<Item> tempitem = std::make_unique<Item>(name, price);
         this->user_purchase_history.emplace_back(*tempitem);
     }
