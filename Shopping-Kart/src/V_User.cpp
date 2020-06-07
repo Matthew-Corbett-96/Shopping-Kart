@@ -186,7 +186,7 @@ void V_User::add_items_to_kart()
         "---------------------------------------------------" New_line
         "        Type the item info, then press Enter       " New_line
         "---------------------------------------------------" End;
-    Log "Enter Item name: ";            std::cin.ignore(1);   std::cin.get(input1, 50, '\n'); std::cin.ignore(1);
+    Log "Enter Item name: ";                                  std::cin.get(input1, 50, '\n'); std::cin.ignore(1);
     Log "Enter Item price: ";                                 std::cin.get(input2, 50, '\n'); std::cin.ignore(1);
     Log "Quantity of item: ";                                 std::cin.get(input3, 5, '\n');  std::cin.ignore(1);
 

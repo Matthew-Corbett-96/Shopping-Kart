@@ -28,7 +28,6 @@ User_Data_Base* Storage = User_Data_Base::Access_Data_Base();
 
 // Deffinitions -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 void start_Screen();
-void main_application();
 void change_User();
 void create_User(const char& type,const std::string, const std::string, const std::string);
 // void remove_User(const std::string&); 
@@ -37,7 +36,6 @@ void choose_Operation();
 void print_options();
 void remove_items();
 //void edit_item(V_User& user);
-//void print_history(V_User& user);
 void goodbye_Screen();
 
 // Main Application -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -91,7 +89,7 @@ void start_Screen()
     Log "Name         :";                         std::cin.get(input1, 25, '\n'); std::cin.ignore(1);
     Log "Address      :";                         std::cin.get(input2, 25, '\n'); std::cin.ignore(1);
     Log "Phone Number :";                         std::cin.get(input3, 25, '\n'); std::cin.ignore(1);
-    Log "Like to be a Gold Member? (y/n): ";      Get input4;
+    Log "Like to be a Gold Member? (y/n): ";      Get input4; std::cin.ignore(1);
 
     // Assign input to temp vars // Stack Allocated 
     name = input1;
@@ -124,14 +122,7 @@ void start_Screen()
     std::this_thread::sleep_for(5s);
     Clear_Screen;
 }
-// Main Application Loop
-void main_application()
-{
-    while (active_session)
-    {
-    }
-    return;
-}
+
 // Main Menu Operations 
 void choose_Operation() 
 {
@@ -196,6 +187,7 @@ void choose_Operation()
         if (GetAsyncKeyState((unsigned short)'6') & 0X8000)
         {
             Clear_Screen;
+            p_Current_User->print_user_history();
             print_options();
         }
 
@@ -209,6 +201,7 @@ void choose_Operation()
     } // End of While Loop 
 
 }
+
 // Goodbye Message 
 void goodbye_Screen()
 {
@@ -250,6 +243,7 @@ void print_options()
             "######################################################"                New_line
             "                 Gold Account: " And p_Current_User->get_user_name()   New_line
             " Type the Number of the Action You Would Like to Take "                New_line
+            "              Or Press \"0\" to Sign Out              "                New_line
             "######################################################"                End;
     }
     else
@@ -263,7 +257,7 @@ void print_options()
     }
     Log
         "Kart:"                           New_line
-        "1.) Add item to Kart."           New_line
+        "1.) Add item to Kart"            New_line
         "2.) Remove Item From Kart"       New_line
         "3.) Item Information"            New_line
         "4.) See My Kart"                 New_line
@@ -288,7 +282,7 @@ void remove_items()
         "=   Type the Index of the Item You Wish To Remove.   ="  New_line
         "======================================================"  End;
     p_Current_User->print_current_kart();
-    Log "Index: "; Get index;
+    Log "Index: "; Get index; std::cin.ignore(1);
 
     // Access Kart 
     p_Current_User->accessKart().remove_item(index);
@@ -316,8 +310,8 @@ void change_User()
             "======================================="     New_line
             "=    To Choose a User to Sign into    ="     New_line
             "=       Type the Name of the User     ="     New_line
-            "=   Type \"New\" to Create a New User  ="     New_line
-            "=         Type \"Exit\" to Exit        ="     New_line
+            "=   Type \"New\" to Create a New User  ="    New_line
+            "=         Type \"Exit\" to Exit        ="    New_line
             "======================================="     New_line
             "Users:"                                      End;
 
@@ -331,7 +325,7 @@ void change_User()
 
         // get the input and point the correct User to the pointer 
         char user_n[25];
-        Log "Name of User: "; std::cin.ignore(1); std::cin.get(user_n, 25, '\n'); std::cin.ignore(1);
+        Log "Name of User: "; std::cin.get(user_n, 25, '\n'); std::cin.ignore(1);
 
         std::string user_name = user_n;
         // if user chooses to exit program return 
@@ -339,6 +333,13 @@ void change_User()
         {
             active_session = false;
             break;
+        }
+
+        // if user chooses to create new user 
+        if (user_name == "New")
+        {
+            start_Screen();
+            continue;
         }
 
         // Check if a Valid User : if not then try again 

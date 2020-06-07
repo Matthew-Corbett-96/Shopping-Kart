@@ -57,31 +57,84 @@ const bool Gold_User::get_Gold_Status() const { return this->Gold_Status == true
 //-----------------------------------------
 
 // Print User's History to the console // override
-void Gold_User::print_user_history() const { for (const auto& item : user_purchase_history) item.print_Item(); }
+void Gold_User::print_user_history() const 
+{ 
+    Log
+        "###################################################" New_line
+        "              User Purchase History.               " New_line
+        "###################################################" End;
+
+    for (const auto& item : user_purchase_history) 
+        item.print_Item(); 
+
+    Log "Press \"Q\" to continue." End;
+
+    // Wait for User to Press Q to continue 
+    while (true)
+    {
+        if (GetAsyncKeyState((unsigned short)'Q') && 0X8000)
+        {
+            Clear_Screen;
+            return;
+        }
+    }
+}
 
 // Get Kart Information // override
 void Gold_User::get_info() const
 {
-	// Get the index and the information wanted from user then use Karts info method
-	int index(0);
-
-	Log
-		"###################################################"  New_line
-		"|Type the Index of what item in your Kart you want|"  New_line
-		"###################################################"  And "\n";
-		Get index;  Skip;
-
-    // If index is out of Range then throw Error 
-    if (index >= user_kart.length() || index <= 0)
+    // If Kart is Empty 
+    if (this->user_kart.length() == 0)
     {
         Clear_Screen;
-        throw std::length_error("Index is Out of Range.");
-        return; 
+        Log
+            "###################################################"   New_line
+            "              Kart is Empty                        "   New_line
+            "###################################################"   End;
+
+        using namespace std::chrono_literals;
+        std::this_thread::sleep_for(3s);
+        Clear_Screen;
+        return;
     }
 
-	// Clear console
-	Clear_Screen;
-	this->user_kart.get_item(index).print_Item();
+	// Get the index and the information wanted from user then use Karts info method
+    // Get the index and the information wanted from user then use Karts info method
+    int index(0);
+    while (true)
+    {
+        Log
+            "###################################################"    New_line
+            "Type the Index of what item in your Kart you want: "    New_line
+            "###################################################"    And "\n";
+        "Index: "; Get index; std::cin.ignore(1); Skip;
+
+        // If Valid then print to screen // else reloop and try again 
+        if (index <= this->user_kart.length())
+        {
+            Clear_Screen;
+            this->user_kart.get_item(index).print_Item();
+            Log "Press \"Q\" to continue." End;
+
+            // Wait for User to Press Q to continue 
+            while (true)
+            {
+                if (GetAsyncKeyState((unsigned short)'Q') && 0X8000)
+                {
+                    Clear_Screen;
+                    return;
+                }
+            }
+        }
+        else
+        {
+            Log "Invalid Index. Please Try Again." End;
+            using namespace std::chrono_literals;
+            std::this_thread::sleep_for(3s);
+            Clear_Screen;
+            continue;
+        }
+    }
 }
 
 // Check Out Kart and Clear the Kart //override
@@ -94,10 +147,21 @@ void Gold_User::check_out()
 		"###################################################" New_line
 		"|           Gold Members Get Free Shipping!       |" New_line
 		"###################################################" End;
-	std::this_thread::sleep_for(5s);
-
+	std::this_thread::sleep_for(3s);
 	Clear_Screen;
 	this->user_kart.check_out(0);
+    Log "Press \" Q \" to continue." End;
+
+    // Get input from user to exit 
+    while (true)
+    {
+        // insert a press any key to continue here ********************
+        if (GetAsyncKeyState((unsigned short)'Q') && 0X8000)
+        {
+            Clear_Screen;
+            return;
+        }
+    }
 }
 
 //Print User's Kart 
@@ -116,9 +180,9 @@ void Gold_User::add_items_to_kart()
     // Get Item information from User
     Log
         "###################################################" New_line
-        "|      Type the item's name, followed by a '/'    |" New_line
+        "|           Type the Item's Information.          |" New_line
         "###################################################" End;
-    Log "Enter Item name: ";            std::cin.ignore(1);   std::cin.get(input1, 50, '\n'); std::cin.ignore(1);
+    Log "Enter Item name: ";                                  std::cin.get(input1, 50, '\n'); std::cin.ignore(1);
     Log "Enter Item price: ";                                 std::cin.get(input2, 50, '\n'); std::cin.ignore(1);
     Log "Quantity of item: ";                                 std::cin.get(input3, 5, '\n');  std::cin.ignore(1);
 
@@ -143,7 +207,7 @@ void Gold_User::add_items_to_kart()
     // Print to console
     Log
         "###################################################" New_line
-        "|             " And name And " Added to Kart.     |" New_line
+        "               " And name And " Added to Kart.     " New_line
         "###################################################" End;
 
     using namespace std::chrono_literals;

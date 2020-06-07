@@ -4,6 +4,7 @@
 #include <list>
 #include <chrono>
 #include <thread>
+#include <windows.h>
 
 /************THIS CLASS IS AN INTERFACE*****************/ 
 /**************CANNOT BE IMPLIMENTED********************/
