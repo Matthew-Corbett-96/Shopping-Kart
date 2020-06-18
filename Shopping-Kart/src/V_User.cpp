@@ -218,3 +218,44 @@ void V_User::add_items_to_kart()
     std::this_thread::sleep_for(3s);
     Clear_Screen;
 }
+
+// Display profile's Information to User 
+void V_User::print_profile() const
+{
+    Log
+        "======================================================"    New_line
+        "User Information:"                                         New_line
+        "       Name        : " And this->get_user_name()       New_line
+        "       Address     : " And this->get_user_address()    New_line
+        "       Phone Number: " And this->get_user_phone()      New_line
+        "                                                      "    New_line
+        "Purchase History:"                                         End;
+
+    // Print User History
+    for (const auto& item : this->user_purchase_history)
+        item.print_Item();
+    Log "======================================================" End;
+
+    // Display Options for Profile Changes
+    Log
+        "Options:"                                                New_line
+        "       1. Change Name"                                   New_line
+        "       2. Change Address"                                New_line
+        "       3. Change Phone Number"                           New_line
+        "       4. Clear Purchase History"                        New_line
+        "       5. Exit"                                          New_line
+        "------------------------------------------------------"  New_line
+        "  Type the Number of the Action You Would like to Do  "  New_line
+        "------------------------------------------------------"  End;
+}
+
+// Deleting a User Profile --> Calls default destructor 
+void V_User::delete_profile()
+{
+}
+
+// Clear User's Kart History 
+void V_User::clear_history()
+{
+}
+

@@ -31,12 +31,13 @@ void start_Screen();
 void change_User();
 void create_User(const char& type,const std::string, const std::string, const std::string);
 // void remove_User(const std::string&); 
-// void update_User(); // interactive screen 
+void user_Profile();
 void choose_Operation();
 void print_options();
 void remove_items();
 //void edit_item(V_User& user);
 void goodbye_Screen();
+void display_kart();
 
 // Main Application -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 int main()
@@ -171,7 +172,7 @@ void choose_Operation()
         if (GetAsyncKeyState((unsigned short)'4') & 0X8000)
         {
             Clear_Screen; 
-            p_Current_User->print_current_kart();  
+            display_kart();
             print_options();
         }
 
@@ -195,6 +196,7 @@ void choose_Operation()
         if (GetAsyncKeyState((unsigned short)'7') & 0X8000)
         {
             Clear_Screen;
+            user_Profile();
             print_options();
         }
 
@@ -357,5 +359,127 @@ void change_User()
         }
     }
     //clear screen and return 
+    Clear_Screen;
+}
+// Displaying Kart to User Interface 
+void display_kart()
+{
+    p_Current_User->print_current_kart();
+    Log "Press \"Q\" to Continue" End;
+    while (true)
+    {
+        if (GetAsyncKeyState((unsigned short)'Q') && 0x8000)
+        {
+            Clear_Screen;
+            return;
+        }
+    }
+}
+// User Profile Interface 
+void user_Profile() 
+{
+    bool active = true;
+    while (active)
+    {
+        p_Current_User->print_profile();    
+        // Wait for user to press the correct Key 
+        while (true)
+        {
+            // change Name
+            if (GetAsyncKeyState((unsigned short)'1') && 0x8000)
+            {
+                char name[25];
+                Clear_Screen;
+                Log
+                    "======================================================"    New_line
+                    "                    Enter New Name                    "    New_line
+                    "======================================================"    End;
+
+                Log "Name: ";  std::cin.get(name, 25, '\n'); std::cin.ignore(1);
+                std::string s_name = name;
+                p_Current_User->set_user_name(s_name);
+
+                Clear_Screen;
+                Log
+                    "======================================================"    New_line
+                    "         New User Name is " And s_name                     New_line
+                    "======================================================"    End;
+
+                std::this_thread::sleep_for(3s);
+                Clear_Screen;
+                break;
+            }
+            // change Adress
+            if (GetAsyncKeyState((unsigned short)'2') && 0x8000)
+            {
+                char address[25];
+                Clear_Screen;
+
+                Log
+                    "======================================================"    New_line
+                    "                    Enter New Address                 "    New_line
+                    "======================================================"    End;
+
+                Log "Address: ";  std::cin.get(address, 25, '\n'); std::cin.ignore(1);
+                std::string s_address = address;
+                p_Current_User->set_user_address(s_address);
+
+                Clear_Screen;
+                Log
+                    "======================================================"    New_line
+                    "         New User Address is " And s_address               New_line
+                    "======================================================"    End;
+
+                std::this_thread::sleep_for(3s);
+                Clear_Screen;
+                break;
+            }
+            // Change Phone Number 
+            if (GetAsyncKeyState((unsigned short)'3') && 0x8000)
+            {
+                char phone[25];
+                Clear_Screen;
+
+                Log
+                    "======================================================"    New_line
+                    "                    Enter New Number                  "    New_line
+                    "======================================================"    End;
+
+                Log "Name: ";  std::cin.get(phone, 25, '\n'); std::cin.ignore(1);
+                std::string s_phone = phone;
+                p_Current_User->set_user_phone(s_phone);
+
+                Clear_Screen;
+                Log
+                    "======================================================"    New_line
+                    "         New User Number is " And s_phone                     New_line
+                    "======================================================"    End;
+
+                std::this_thread::sleep_for(3s);
+                Clear_Screen;
+                break;
+            }
+            // Clear Purchase History
+            if (GetAsyncKeyState((unsigned short)'4') && 0x8000)
+            {
+                Clear_Screen;
+                p_Current_User->clear_history();
+                Log "======================================================"  New_line
+                    "             User Purchase Histroy Cleared            "  New_line
+                    "======================================================"  End;
+                std::this_thread::sleep_for(3s);
+                Clear_Screen;
+                break;
+            }
+            // Exit 
+            if (GetAsyncKeyState((unsigned short)'5') && 0x8000)
+            {
+                // Set bool to false to stop the loop
+                Clear_Screen;
+                active = false; 
+                break;
+            }
+        }
+    }
     Clear_Screen;
 }

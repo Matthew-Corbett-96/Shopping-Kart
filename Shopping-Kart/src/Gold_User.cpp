@@ -99,7 +99,6 @@ void Gold_User::get_info() const
     }
 
 	// Get the index and the information wanted from user then use Karts info method
-    // Get the index and the information wanted from user then use Karts info method
     int index(0);
     while (true)
     {
