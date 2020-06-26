@@ -403,9 +403,14 @@ void user_Profile()
                 Log
                     "======================================================"    New_line
                     "         New User Name is " And s_name                     New_line
-                    "======================================================"    End;
+                    "======================================================"    New_line
+                    "Press \"Q\" to continue"                                   End;
 
-                std::this_thread::sleep_for(3s);
+                while (true)
+                {
+                    if (GetAsyncKeyState((unsigned short)'Q') && 0X8000)
+                        break;
+                }
                 Clear_Screen;
                 break;
             }
@@ -428,9 +433,14 @@ void user_Profile()
                 Log
                     "======================================================"    New_line
                     "         New User Address is " And s_address               New_line
-                    "======================================================"    End;
+                    "======================================================"    New_line
+                    "Press \"Q\" to continue"                                   End;
 
-                std::this_thread::sleep_for(3s);
+                while (true)
+                {
+                    if (GetAsyncKeyState((unsigned short)'Q') && 0X8000)
+                        break;
+                }
                 Clear_Screen;
                 break;
             }
@@ -452,10 +462,16 @@ void user_Profile()
                 Clear_Screen;
                 Log
                     "======================================================"    New_line
-                    "         New User Number is " And s_phone                     New_line
-                    "======================================================"    End;
+                    "         New User Number is " And s_phone                  New_line
+                    "======================================================"    New_line
+                    "Press \"Q\" to continue"                                   End;
 
-                std::this_thread::sleep_for(3s);
+                while (true)
+                {
+                    if (GetAsyncKeyState((unsigned short)'Q') && 0X8000)
+                        break;
+                }
+
                 Clear_Screen;
                 break;
             }

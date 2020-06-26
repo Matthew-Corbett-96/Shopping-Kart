@@ -7,7 +7,3 @@ __Amazon Like Shopping Kart Console Application__ _-By Matthew J. Corbett_
 - [ ] Figure Out how to change the color of the screen in the console --> `#include <windows.h>` needed 
 - [ ] Sounds Files??? 
 - [ ] Logging Class --> Lator 
-
-
-## Logging Macro's 
-// Figure this out later // 
