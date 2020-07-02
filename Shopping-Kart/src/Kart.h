@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 
 #include <vector>
 #include <memory>
@@ -7,13 +7,13 @@
 class Kart
 {
 private:
-    // Name of Kart // Optional 
+    // Name of Kart // Optional
     std::string kart_name = "Kart";
-    // List of Items 
+    // List of Items
     std::vector<Item> shoping_list;
 
 protected:
-    // Number of Items in List 
+    // Number of Items in List
     unsigned int list_length = 0;
 
 public:
@@ -27,26 +27,26 @@ public:
     // Destructors
     ~Kart();
 
-    // Getters 
+    // Getters
     const Item&        get_item      (int) const;
     const float        get_item_price(int) const;
     const std::string  get_item_name (int) const;
-    const unsigned int length        (   ) const; 
+    const unsigned int length        (   ) const;
 
-    // Setters 
+    // Setters
     void set_name(const std::string&);
     void add_item(const std::string&, const float&);
     void add_item(const Item&);
 
-    // Remover 
+    // Remover
     void remove_item(const int);
 
-    // Calculate Total Price   
+    // Calculate Total Price
     void check_out(const float&) const;
 
-    // Print Kart 
+    // Print Kart
     void print_kart() const;
 
-    // Friend Class is Item 
+    // Friend Class is Item
     friend class Item;
 };

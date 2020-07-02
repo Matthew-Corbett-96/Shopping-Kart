@@ -5,24 +5,24 @@
 
 // Name Spaces -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 using namespace std::chrono_literals;
-using namespace std::chrono; 
+using namespace std::chrono;
 
 // Personal Logging Macros -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-#define Log std::cout << 
-#define And << 
-#define End << std::endl 
-#define Skip std::cout << std::endl 
-#define New_line << "\n" << 
+#define Log std::cout <<
+#define And <<
+#define End << std::endl
+#define Skip std::cout << std::endl
+#define New_line << "\n" <<
 #define Clear_Screen std::system("cls")
-#define Get std::cin >> 
+#define Get std::cin >>
 #define AAnd >>
 
 // Globals -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   // keep track if user is still shopping
 static bool still_shopping(true), active_session(true);
-// pointer to current user 
+// pointer to current user
 static V_User* p_Current_User(nullptr);
-// DataBase of All the Users 
+// DataBase of All the Users
 User_Data_Base* User_Data_Base::instance = 0;
 User_Data_Base* Storage = User_Data_Base::Access_Data_Base();
 
@@ -30,7 +30,7 @@ User_Data_Base* Storage = User_Data_Base::Access_Data_Base();
 void start_Screen();
 void change_User();
 void create_User(const char& type,const std::string, const std::string, const std::string);
-// void remove_User(const std::string&); 
+// void remove_User(const std::string&);
 void user_Profile();
 void choose_Operation();
 void print_options();
@@ -44,17 +44,17 @@ int main()
 {
     try
     {
-        // Run Start Screen 
+        // Run Start Screen
         start_Screen();
         while (active_session)
-        {   
-            // Select User or create user then direct back to select User 
+        {
+            // Select User or create user then direct back to select User
             change_User();
-            if (active_session == false) break; 
+            if (active_session == false) break;
             // Run Operations Window Loop
             choose_Operation();
         }
-        // Run Goodbye Screen 
+        // Run Goodbye Screen
         goodbye_Screen();
     }
     //Error Handeling------------------------------------------------------------------------
@@ -71,7 +71,7 @@ int main()
 
 // Main UX && UI Functions -----------------------------------------
 
-// Welcome User and Create Profile 
+// Welcome User and Create Profile
 void start_Screen()
 {
     // Variables to recieve input and create the account
@@ -81,7 +81,7 @@ void start_Screen()
     // Clear Screen for Application
     Clear_Screen;
 
-    // Opening Screen 
+    // Opening Screen
     Log
         "--------------------------------------"  New_line
         "-Welcome to Matty J's Online Shoping!-"  New_line
@@ -92,18 +92,18 @@ void start_Screen()
     Log "Phone Number :";                         std::cin.get(input3, 25, '\n'); std::cin.ignore(1);
     Log "Like to be a Gold Member? (y/n): ";      Get input4; std::cin.ignore(1);
 
-    // Assign input to temp vars // Stack Allocated 
+    // Assign input to temp vars // Stack Allocated
     name = input1;
     address = input2;
     phone_number = input3;
 
-    // Create the User and push to container 
+    // Create the User and push to container
     create_User(input4, name, address, phone_number);
 
-    // Clear Screen 
+    // Clear Screen
     Clear_Screen;
 
-    // Confirmation Screen 
+    // Confirmation Screen
     if (input4 == 'y')
     {
         Log
@@ -119,37 +119,37 @@ void start_Screen()
             "------------------------------------------------------"  End;
     }
 
-    // Wait 3 seconds then clear the screen 
+    // Wait 3 seconds then clear the screen
     std::this_thread::sleep_for(5s);
     Clear_Screen;
 }
 
-// Main Menu Operations 
-void choose_Operation() 
+// Main Menu Operations
+void choose_Operation()
 {
     // For when it is the 2nd User to enter the Application
     still_shopping = true;
     // Choose Print Screen Based on if User is Gold Status
     print_options();
 
-    // Waiting for User Input 
+    // Waiting for User Input
     while (still_shopping)
     {
         // Read input from key board, clear the screen,
-        // And then go to apropriet screen 
+        // And then go to apropriet screen
 
         // User Exits Shopping && Goes to User menu
         if (GetAsyncKeyState((unsigned short)'0') & 0X8000)
         {
             Clear_Screen;
-            still_shopping = false;  
+            still_shopping = false;
         }
 
         // launch adding items
         if (GetAsyncKeyState((unsigned short)'1') & 0X8000)
         {
             Clear_Screen;
-            p_Current_User->add_items_to_kart();  
+            p_Current_User->add_items_to_kart();
             print_options();
         }
 
@@ -164,14 +164,14 @@ void choose_Operation()
         if (GetAsyncKeyState((unsigned short)'3') & 0X8000)
         {
             Clear_Screen;
-            p_Current_User->get_info();  
+            p_Current_User->get_info();
             print_options();
         }
 
         // print kart
         if (GetAsyncKeyState((unsigned short)'4') & 0X8000)
         {
-            Clear_Screen; 
+            Clear_Screen;
             display_kart();
             print_options();
         }
@@ -184,7 +184,7 @@ void choose_Operation()
             print_options();
         }
 
-        // See Shopping History 
+        // See Shopping History
         if (GetAsyncKeyState((unsigned short)'6') & 0X8000)
         {
             Clear_Screen;
@@ -192,7 +192,7 @@ void choose_Operation()
             print_options();
         }
 
-        // Launch Profile Page 
+        // Launch Profile Page
         if (GetAsyncKeyState((unsigned short)'7') & 0X8000)
         {
             Clear_Screen;
@@ -200,31 +200,31 @@ void choose_Operation()
             print_options();
         }
 
-    } // End of While Loop 
+    } // End of While Loop
 
 }
 
-// Goodbye Message 
+// Goodbye Message
 void goodbye_Screen()
 {
-    // Clear the Screen 
+    // Clear the Screen
     Clear_Screen;
-    // goodbye Message 
+    // goodbye Message
     Log
         "======================================================="  New_line
         "=Thanks For Shopping With Matty J's Online Shoopping !="  New_line
         "=            Hope to see you Real Soon !              ="  New_line
         "======================================================="  End;
-    // pause for 3 seconds 
+    // pause for 3 seconds
     std::this_thread::sleep_for(3s);
 }
 
 // Commponent Functions --------------------------------------------
 
-// create a user 
+// create a user
 void create_User(const char& type, const std::string name, const std::string address, const std::string phone_num)
 {
-    // Currently Using Raw Pointers --> will need to be fixed lator 
+    // Currently Using Raw Pointers --> will need to be fixed lator
     if (type == 'y')
     {
         V_User* user = new Gold_User(name, address, phone_num);
@@ -269,16 +269,16 @@ void print_options()
         "7.) Your Profile "               New_line
         "Action: ";
 }
-// Remove items from Active Kart 
+// Remove items from Active Kart
 void remove_items()
 {
-    // Clear Screen 
+    // Clear Screen
     Clear_Screen;
 
-    // Create index var 
+    // Create index var
     int index(0);
 
-    // UI Here 
+    // UI Here
     Log
         "======================================================"  New_line
         "=   Type the Index of the Item You Wish To Remove.   ="  New_line
@@ -286,28 +286,28 @@ void remove_items()
     p_Current_User->print_current_kart();
     Log "Index: "; Get index; std::cin.ignore(1);
 
-    // Access Kart 
+    // Access Kart
     p_Current_User->accessKart().remove_item(index);
 
-    // Clear the Screen 
+    // Clear the Screen
     Clear_Screen;
 
-    // Confirmation Screen 
-    Log 
+    // Confirmation Screen
+    Log
         "======================================================"  New_line
         "=                Item Has Been Remove.               ="  New_line
         "======================================================"  End;
 
-    // Pause 3 Seconds then clear screen again 
+    // Pause 3 Seconds then clear screen again
     std::this_thread::sleep_for(3s);
-    Clear_Screen; 
+    Clear_Screen;
 }
-// Choosing a User 
+// Choosing a User
 void change_User()
 {
     while (true)
     {
-        // Print Message to Console 
+        // Print Message to Console
         Log
             "======================================="     New_line
             "=    To Choose a User to Sign into    ="     New_line
@@ -325,26 +325,26 @@ void change_User()
             counter++;
         }
 
-        // get the input and point the correct User to the pointer 
+        // get the input and point the correct User to the pointer
         char user_n[25];
         Log "Name of User: "; std::cin.get(user_n, 25, '\n'); std::cin.ignore(1);
 
         std::string user_name = user_n;
-        // if user chooses to exit program return 
+        // if user chooses to exit program return
         if (user_name == "Exit")
         {
             active_session = false;
             break;
         }
 
-        // if user chooses to create new user 
+        // if user chooses to create new user
         if (user_name == "New")
         {
             start_Screen();
             continue;
         }
 
-        // Check if a Valid User : if not then try again 
+        // Check if a Valid User : if not then try again
         if (Storage->users.count(user_name))
         {
             Storage->get_User(user_name, p_Current_User);
@@ -358,10 +358,10 @@ void change_User()
             continue;
         }
     }
-    //clear screen and return 
+    //clear screen and return
     Clear_Screen;
 }
-// Displaying Kart to User Interface 
+// Displaying Kart to User Interface
 void display_kart()
 {
     p_Current_User->print_current_kart();
@@ -375,14 +375,14 @@ void display_kart()
         }
     }
 }
-// User Profile Interface 
-void user_Profile() 
+// User Profile Interface
+void user_Profile()
 {
     bool active = true;
     while (active)
     {
-        p_Current_User->print_profile();    
-        // Wait for user to press the correct Key 
+        p_Current_User->print_profile();
+        // Wait for user to press the correct Key
         while (true)
         {
             // change Name
@@ -444,7 +444,7 @@ void user_Profile()
                 Clear_Screen;
                 break;
             }
-            // Change Phone Number 
+            // Change Phone Number
             if (GetAsyncKeyState((unsigned short)'3') && 0x8000)
             {
                 char phone[25];
@@ -487,12 +487,12 @@ void user_Profile()
                 Clear_Screen;
                 break;
             }
-            // Exit 
+            // Exit
             if (GetAsyncKeyState((unsigned short)'5') && 0x8000)
             {
                 // Set bool to false to stop the loop
                 Clear_Screen;
-                active = false; 
+                active = false;
                 break;
             }
         }
