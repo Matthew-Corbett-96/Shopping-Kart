@@ -1,6 +1,5 @@
 #include "Normal_User.h"
 #include "Gold_User.h"
-#include <Windows.h>
 #include "User_Data_Base.h"
 
 // Name Spaces -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -10,8 +9,8 @@ using namespace std::chrono;
 // Personal Logging Macros -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 #define Log std::cout <<
 #define And <<
-#define End << std::endl
-#define Skip std::cout << std::endl
+#define End << "\n"
+#define Skip std::cout << "\n"
 #define New_line << "\n" <<
 #define Clear_Screen std::system("cls")
 #define Get std::cin >>
@@ -30,7 +29,7 @@ User_Data_Base* Storage = User_Data_Base::Access_Data_Base();
 void start_Screen();
 void change_User();
 void create_User(const char& type,const std::string, const std::string, const std::string);
-// void remove_User(const std::string&);
+void remove_User();
 void user_Profile();
 void choose_Operation();
 void print_options();
@@ -312,8 +311,9 @@ void change_User()
             "======================================="     New_line
             "=    To Choose a User to Sign into    ="     New_line
             "=       Type the Name of the User     ="     New_line
-            "=   Type \"New\" to Create a New User  ="    New_line
-            "=         Type \"Exit\" to Exit        ="    New_line
+            "=   Type \"New\" to Create a New User   ="   New_line
+            "=   Type \"Remove\" to Delete a User    ="   New_line
+            "=         Type \"Exit\" to Exit         ="   New_line
             "======================================="     New_line
             "Users:"                                      End;
 
@@ -341,6 +341,13 @@ void change_User()
         if (user_name == "New")
         {
             start_Screen();
+            continue;
+        }
+
+        // if user chooses to remove a user
+        if (user_name == "Remove")
+        {
+            remove_User();
             continue;
         }
 
@@ -498,4 +505,64 @@ void user_Profile()
         }
     }
     Clear_Screen;
+}
+
+// Remove a user from the data base and then call the destructor 
+void remove_User() 
+{
+    Clear_Screen;
+    while (true)
+    {
+        // Promt to type name
+        char n_name[25];
+        std::string name;
+        Log
+            "======================================================" New_line
+            "    Type the name of the user you wish to remove      " New_line
+            "======================================================" End;
+        // Show the User the List of Users to Choose from
+        int counter(1);
+        for (const auto& user : Storage->users)
+        {
+            Log " " And counter And ".)" And user.first End;
+            counter++;
+        }
+
+        // Get name of user 
+        Log "Name: "; std::cin.get(n_name, 20, '\n'); std::cin.ignore(1);
+        name = n_name;
+
+        // Check if a Valid User : if not then try again
+        if (Storage->users.count(name))
+        {
+            Storage->get_User(name, p_Current_User); 
+            Clear_Screen;
+            // Call on Database to remove user from Database 
+            Storage->remove(name);
+            p_Current_User = nullptr;
+
+            Log
+                "======================================================" New_line
+                "    User \" " And n_name And "\" has been removed.    " New_line
+                "======================================================" New_line
+                "Press \"Q\" to Continue"                                End;
+            while (true)
+            {
+                if (GetAsyncKeyState((unsigned short)'Q') && 0x8000)
+                {
+                    Clear_Screen;
+                    return;
+                }
+            }
+        }
+        else
+        {
+            Log "Invalid Name. Try Again." End;
+            std::this_thread::sleep_for(3s);
+            Clear_Screen;
+            continue;
+        }
+    }
+  
+    
 }

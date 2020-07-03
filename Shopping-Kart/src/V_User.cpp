@@ -248,13 +248,5 @@ void V_User::print_profile() const
         "------------------------------------------------------"  End;
 }
 
-// Deleting a User Profile --> Calls default destructor
-void V_User::delete_profile()
-{
-}
-
 // Clear User's Kart History
-void V_User::clear_history()
-{
-}
-
+void V_User::clear_history() { this->user_purchase_history.clear(); }

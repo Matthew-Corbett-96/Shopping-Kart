@@ -58,6 +58,5 @@ public:
 	virtual void check_out         ()       = 0;
 	virtual void print_current_kart() const = 0; 
 	virtual void print_profile	   () const;
-	virtual void delete_profile    ();
 	virtual void clear_history     ();
 };
