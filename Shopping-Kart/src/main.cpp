@@ -156,7 +156,7 @@ void choose_Operation()
         if (GetAsyncKeyState((unsigned short)'2') & 0X8000)
         {
             Clear_Screen;
-            remove_items(); // TODO: Needs to be moved to Users Class 
+            p_Current_User->accessKart().remove_item();
             print_options();
         }
 
@@ -268,36 +268,6 @@ void print_options()
         "6.) Your Shopping History "      New_line
         "7.) Your Profile "               New_line
         "Action: ";
-}
-// Remove items from Active Kart
-void remove_items()
-{
-    // Create index var
-    int index(0);
-
-    // UI Here
-    Log
-        "======================================================"  New_line
-        "=   Type the Index of the Item You Wish To Remove.   ="  New_line
-        "======================================================"  End;
-    p_Current_User->print_current_kart();
-    Log "Index: "; Get index; std::cin.ignore(1);
-
-    // Access Kart
-    p_Current_User->accessKart().remove_item(index);
-
-    // Clear the Screen
-    Clear_Screen;
-
-    // Confirmation Screen
-    Log
-        "======================================================"  New_line
-        "=                Item Has Been Remove.               ="  New_line
-        "======================================================"  End;
-
-    // Pause 3 Seconds then clear screen again
-    std::this_thread::sleep_for(3s);
-    Clear_Screen;
 }
 // Choosing a User
 void change_User()

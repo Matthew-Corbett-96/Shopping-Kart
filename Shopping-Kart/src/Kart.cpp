@@ -1,5 +1,8 @@
 #include "Kart.h"
 
+// Names Spaces ---------------------------
+using namespace std::chrono_literals;
+using namespace std::chrono;
 
 // Personal Logging Macros-----------------
 //-----------------------------------------
@@ -10,6 +13,9 @@
 #define End << std::endl 
 #define Skip std::cout << std::endl 
 #define New_line << "\n" << 
+#define Clear_Screen std::system("cls")
+#define Get std::cin >>
+#define AAnd >>
 //-----------------------------------------
 //-----------------------------------------
 //-----------------------------------------
@@ -153,10 +159,36 @@ void Kart::add_item(const Item& item)
 }
 
 // Remove Item from the Kart 
-void Kart::remove_item(int index)
+void Kart::remove_item()
 {
+    // Create index var
+    int index(0);
+
+    // UI Here
+    Log
+        "======================================================"  New_line
+        "=   Type the Index of the Item You Wish To Remove.   ="  New_line
+        "======================================================"  End;
+    this->print_kart();
+    Log "Index: "; Get index; std::cin.ignore(1);
+
+    // Access Kart
     this->shoping_list.erase(shoping_list.begin() + (--index));
     this->list_length--;
+
+    // Clear the Screen
+    Clear_Screen;
+
+    // Confirmation Screen
+    Log
+        "======================================================"  New_line
+        "=                Item Has Been Remove.               ="  New_line
+        "======================================================"  End;
+
+   
+    // Pause 3 Seconds then clear screen again
+    std::this_thread::sleep_for(3s);
+    Clear_Screen;
 }
 
 // Calculate Total Price   
@@ -166,24 +198,10 @@ void Kart::check_out(const float& distance) const
     if (distance < 0.00f) 
         throw std::invalid_argument("Distance of Order Cannot Be Negative");
 
-    // If Kart is empty --> Log Message and return 
+    // If Kart is empty --> Log Message and return
     if (shoping_list.empty())
     {
         Log "***KART IS EMPTY. Please make a purchase to see your recipt.***" End;
-        // Setting the std::cout to round to the 2nd decimal place 
-        Log std::fixed And std::setprecision(2);
-
-        // Logging the information 
-        Log
-            "------------------------"        New_line
-            "CHECKING OUT: " And kart_name    New_line
-            "------------------------"        New_line
-            "Item Total:  " And "$" And 0.00  New_line
-            "Tax:         " And "$" And 0.00  New_line
-            "Shipping:    " And "$" And 0.00  New_line
-            "------------------------"        New_line
-            "Total Price: " And "$" And 0.00  New_line
-            "------------------------"        End;
         return;
     }
 

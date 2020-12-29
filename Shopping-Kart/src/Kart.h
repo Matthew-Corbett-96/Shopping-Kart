@@ -2,6 +2,8 @@
 
 #include <vector>
 #include <memory>
+#include <chrono>
+#include <thread>
 #include "Item.h"
 
 class Kart
@@ -39,7 +41,7 @@ public:
     void add_item(const Item&);
 
     // Remover
-    void remove_item(const int);
+    void remove_item();
 
     // Calculate Total Price
     void check_out(const float&) const;
