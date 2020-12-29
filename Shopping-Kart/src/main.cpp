@@ -155,7 +155,8 @@ void choose_Operation()
         // launch remove item
         if (GetAsyncKeyState((unsigned short)'2') & 0X8000)
         {
-            remove_items();
+            Clear_Screen;
+            remove_items(); // TODO: Needs to be moved to Users Class 
             print_options();
         }
 
@@ -171,7 +172,7 @@ void choose_Operation()
         if (GetAsyncKeyState((unsigned short)'4') & 0X8000)
         {
             Clear_Screen;
-            display_kart();
+            display_kart(); // TODO: needs to be moved to the Users Class 
             print_options();
         }
 
@@ -271,9 +272,6 @@ void print_options()
 // Remove items from Active Kart
 void remove_items()
 {
-    // Clear Screen
-    Clear_Screen;
-
     // Create index var
     int index(0);
 
